@@ -8,7 +8,7 @@ const Header = ({ title = 'Küçükçekmece Belediyesi QR Menü' }) => {
       <div className="container header-inner">
         <Link to="/">
           <img 
-            src="/assets/logo.png" 
+            src="./public/logokc.png" 
             alt="Küçükçekmece Belediyesi Logo" 
             className="logo" 
           />
