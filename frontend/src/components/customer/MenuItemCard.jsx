@@ -1,4 +1,6 @@
-// frontend/src/components/customer/MenuItemCard.jsx - Modern tasarıma güncellenmiş versiyon
+// frontend/src/components/customer/MenuItemCard.jsx
+// Menü öğesi kartı bileşeni stili
+
 import React from 'react';
 import { Link } from 'react-router-dom';
 
@@ -7,6 +9,13 @@ const MenuItemCard = ({ menuItem, restaurantSlug }) => {
   const truncateText = (text, maxLength) => {
     if (!text || text.length <= maxLength) return text;
     return text.slice(0, maxLength) + '...';
+  };
+
+  // Fiyat biçimlendirme - ondalık basamakları göstermek için
+  const formatPrice = (price) => {
+    if (typeof price !== 'number') return '';
+    
+    return price.toFixed(2);
   };
 
   return (
@@ -31,7 +40,7 @@ const MenuItemCard = ({ menuItem, restaurantSlug }) => {
         
         <div className="d-flex justify-content-between align-items-center mt-auto">
           <div className="menu-item-price">
-            {menuItem.price > 0 ? `${menuItem.price.toFixed(2)} ₺` : ''}
+            {menuItem.price > 0 ? `${formatPrice(menuItem.price)} ₺` : ''}
           </div>
           
           {menuItem.weight && (

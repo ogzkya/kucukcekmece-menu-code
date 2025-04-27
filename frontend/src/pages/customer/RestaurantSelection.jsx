@@ -107,47 +107,48 @@ const RestaurantSelection = () => {
             </div>
             
             {filteredRestaurants.length > 0 ? (
-              <div className="row">
+              <div className="row facilities-row">
                 {filteredRestaurants.map((restaurant) => (
                   <div key={restaurant._id} className="col-12 col-md-6 mb-4">
-                    <Link to={`/tesis/${restaurant.slug}`} className="restaurant-card">
-                      <div className="card h-100">
+                    <Link to={`/tesis/${restaurant.slug}`} className="facility-card">
+                      <div className="facility-image-container">
                         {restaurant.imageUrl ? (
                           <img 
                             src={restaurant.imageUrl} 
                             alt={restaurant.name} 
-                            className="card-img-top restaurant-image"
+                            className="facility-image" 
                           />
                         ) : (
-                          <div className="restaurant-image-placeholder">
+                          <div className="facility-image-placeholder">
                             <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                              <path d="M3 3h18v18H3zM8.5 7a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"/>
-                              <path d="m21 15-5-5L5 21"/>
+                              <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                              <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                              <polyline points="21 15 16 10 5 21"></polyline>
                             </svg>
                           </div>
                         )}
-                        <div className="card-body">
-                          <h3 className="restaurant-card-title">{restaurant.name}</h3>
-                          <p className="restaurant-card-address">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="me-2">
-                              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-                              <circle cx="12" cy="10" r="3"></circle>
-                            </svg>
-                            {restaurant.address}
+                      </div>
+                      <div className="facility-content">
+                        <h3 className="facility-title">{restaurant.name}</h3>
+                        <div className="facility-address">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="me-2">
+                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                            <circle cx="12" cy="10" r="3"></circle>
+                          </svg>
+                          {restaurant.address}
+                        </div>
+                        {restaurant.description && (
+                          <p className="facility-description">
+                            {restaurant.description}
                           </p>
-                          {restaurant.description && (
-                            <p className="restaurant-card-description mt-2">
-                              {restaurant.description}
-                            </p>
-                          )}
-                          <div className="restaurant-card-action mt-3">
-                            <span className="view-menu-btn">
-                              Menüyü Görüntüle
-                              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="ms-2">
-                                <path d="M5 12h14M12 5l7 7-7 7"/>
-                              </svg>
-                            </span>
-                          </div>
+                        )}
+                        <div className="facility-action">
+                          <span className="facility-button">
+                            Menüyü Görüntüle
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="ms-2">
+                              <path d="M5 12h14M12 5l7 7-7 7"/>
+                            </svg>
+                          </span>
                         </div>
                       </div>
                     </Link>

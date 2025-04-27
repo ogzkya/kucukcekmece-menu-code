@@ -1,13 +1,16 @@
-// frontend/src/index.jsx - Güncellendi
+// frontend/src/index.jsx
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import App from './App';
 
-// Modern stil dosyalarını import et
+// Mevcut stiller
 import './styles/index.css';
 import './styles/additional.css';
 import './styles/animations.css';
+
+// Yeni tesis kartları için stiller
+import './styles/facility-cards.css';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
