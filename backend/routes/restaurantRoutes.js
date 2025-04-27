@@ -7,6 +7,7 @@ import {
   updateRestaurant,
   deleteRestaurant,
   getAdminRestaurants,
+  getRestaurantBySlug
 } from '../controllers/restaurantController.js';
 import { protect, admin } from '../middleware/authMiddleware.js';
 import upload from '../middleware/uploadMiddleware.js';
@@ -19,14 +20,10 @@ router.route('/')
 
 router.get('/admin', protect, admin, getAdminRestaurants);
 router.get('/slug/:slug', getRestaurantBySlug);
+
 router.route('/:id')
   .get(getRestaurantById)
   .put(protect, admin, upload.single('image'), updateRestaurant)
   .delete(protect, admin, deleteRestaurant);
 
 export default router;
-
-// backend/routes/restaurantRoutes.js - Slug route'u ekle
-// Mevcut route'lar korunarak, yeni slug route'u ekleniyor
-
-// Slug ile tesis getirme route'u ekle

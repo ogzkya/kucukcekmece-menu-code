@@ -7,7 +7,7 @@ import { AuthProvider } from './context/AuthContext';
 import Home from './pages/customer/Home';
 import CategoryItems from './pages/customer/CategoryItems';
 import ItemDetail from './pages/customer/ItemDetail';
-
+import RestaurantSelection from './pages/customer/RestaurantSelection';
 
 // Admin Pages
 import AdminLogin from './pages/admin/Login';
@@ -32,10 +32,10 @@ const App = () => {
     <AuthProvider>
       <Routes>
         {/* Customer Routes */}
-      <Route path="/" element={<RestaurantSelection />} />
-<Route path="/tesis/:slug" element={<Home />} />
-<Route path="/tesis/:slug/category/:id" element={<CategoryItems />} />
-<Route path="/tesis/:slug/item/:id" element={<ItemDetail />} />
+        <Route path="/" element={<RestaurantSelection />} />
+        <Route path="/tesis/:slug" element={<Home />} />
+        <Route path="/tesis/:slug/category/:id" element={<CategoryItems />} />
+        <Route path="/tesis/:slug/item/:id" element={<ItemDetail />} />
         
         {/* Admin Routes */}
         <Route path="/admin/login" element={<AdminLogin />} />

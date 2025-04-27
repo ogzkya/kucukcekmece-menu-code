@@ -8,7 +8,7 @@ import MenuItemCard from '../../components/customer/MenuItemCard';
 import Loader from '../../components/common/Loader';
 
 const CategoryItems = () => {
-  const { id } = useParams();
+  const { id, slug } = useParams();
   const [menuItems, setMenuItems] = useState([]);
   const [category, setCategory] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -34,13 +34,6 @@ const CategoryItems = () => {
 
     fetchData();
   }, [id]);
-// frontend/src/pages/customer/CategoryItems.jsx - Slug'a göre güncellenmiş sayfa
-// useParams ile slug da alınacak, linkler slug içerecek şekilde güncellenecek
-
-// Link yollarını güncelle
-
-
-// MenuItemCard bileşenine restaurantSlug propu ekle
 
   if (loading) return <Loader />;
 
@@ -51,12 +44,12 @@ const CategoryItems = () => {
         {error && <div className="alert alert-danger">{error}</div>}
         
         <div className="mb-4">
-        <Link to={`/tesis/${slug}`} className="back-button">
-  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-    <path fillRule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
-  </svg>
-  Ana Menüye Dön
-</Link>
+          <Link to={`/tesis/${slug}`} className="back-button">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+              <path fillRule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
+            </svg>
+            Ana Menüye Dön
+          </Link>
         </div>
         
         {category && (
