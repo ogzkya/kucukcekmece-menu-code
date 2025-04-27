@@ -1,5 +1,5 @@
+// Menü Öğesi Kartı Bileşeni Güncellemesi
 // frontend/src/components/customer/MenuItemCard.jsx
-// Menü öğesi kartı bileşeni stili
 
 import React from 'react';
 import { Link } from 'react-router-dom';
@@ -11,21 +11,26 @@ const MenuItemCard = ({ menuItem, restaurantSlug }) => {
     return text.slice(0, maxLength) + '...';
   };
 
-  // Fiyat biçimlendirme - ondalık basamakları göstermek için
+  // Fiyat biçimlendirme
   const formatPrice = (price) => {
     if (typeof price !== 'number') return '';
-    
     return price.toFixed(2);
   };
 
   return (
-    <div className="menu-item-card fade-in">
+    <div className="menu-item-card">
       <Link to={`/tesis/${restaurantSlug}/item/${menuItem._id}`} className="menu-item-image-container">
         <img 
           src={menuItem.imageUrl} 
           alt={menuItem.name} 
           className="menu-item-image" 
+          loading="lazy" 
         />
+        {menuItem.price > 0 && (
+          <div className="menu-item-price-tag">
+            {formatPrice(menuItem.price)} ₺
+          </div>
+        )}
       </Link>
       <div className="menu-item-content">
         <Link to={`/tesis/${restaurantSlug}/item/${menuItem._id}`}>
@@ -38,20 +43,23 @@ const MenuItemCard = ({ menuItem, restaurantSlug }) => {
           </p>
         )}
         
-        <div className="d-flex justify-content-between align-items-center mt-auto">
-          <div className="menu-item-price">
-            {menuItem.price > 0 ? `${formatPrice(menuItem.price)} ₺` : ''}
-          </div>
-          
+        <div className="menu-item-meta">
           {menuItem.weight && (
             <div className="menu-item-weight">
               {menuItem.weight}
             </div>
           )}
+          
+          <Link to={`/tesis/${restaurantSlug}/item/${menuItem._id}`} className="facility-button">
+            Detaylar
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M5 12h14M12 5l7 7-7 7"></path>
+            </svg>
+          </Link>
         </div>
         
         {menuItem.allergens && menuItem.allergens.length > 0 && (
-          <div className="menu-item-allergens mt-2">
+          <div className="menu-item-allergens">
             {menuItem.allergens.slice(0, 2).map((allergen, index) => (
               <span key={index} className="menu-item-allergen">
                 {allergen}

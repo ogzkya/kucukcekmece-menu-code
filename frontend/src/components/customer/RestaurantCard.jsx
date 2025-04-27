@@ -1,4 +1,6 @@
+// Tesis Kartı Bileşeni Güncellemesi
 // frontend/src/components/customer/RestaurantCard.jsx
+
 import React from 'react';
 import { Link } from 'react-router-dom';
 
@@ -11,6 +13,7 @@ const RestaurantCard = ({ restaurant }) => {
             src={restaurant.imageUrl} 
             alt={restaurant.name} 
             className="facility-image" 
+            loading="lazy"
           />
         ) : (
           <div className="facility-image-placeholder">
@@ -40,10 +43,9 @@ const RestaurantCard = ({ restaurant }) => {
         
         <div className="facility-action">
           <span className="facility-button">
-            Menüyü Görüntüler
+            Menüyü Görüntüle
             <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M5 12h14"></path>
-              <path d="M12 5l7 7-7 7"></path>
+              <path d="M5 12h14M12 5l7 7-7 7"></path>
             </svg>
           </span>
         </div>

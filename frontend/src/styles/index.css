@@ -1,4 +1,279 @@
 /* frontend/src/styles/index.css - Global styles */
+
+/* frontend/src/styles/index.css - Ana stil değişiklikleri */
+
+:root {
+  /* OddMenu renk paleti */
+  --primary: #FF9A76;          /* Ana turuncu renk */
+  --primary-light: #FFBBA3;    /* Açık turuncu */
+  --primary-dark: #F57F53;     /* Koyu turuncu */
+  --background-color: #FFFFFF; /* Beyaz arka plan */
+  --background-light: #F9F9F9; /* Açık gri arka plan */
+  --text-dark: #333333;        /* Koyu metin rengi */
+  --text-light: #777777;       /* Açık metin rengi */
+  --text-white: #FFFFFF;       /* Beyaz metin */
+  --border-color: #EEEEEE;     /* Kenarlık rengi */
+  --success: #4BB543;          /* Başarı rengi */
+  --danger: #DC3545;           /* Hata rengi */
+  
+  /* Boşluk (spacing) değerleri */
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2rem;
+  
+  /* Köşe yuvarlama (border-radius) değerleri */
+  --border-radius-sm: 8px;
+  --border-radius-md: 16px;
+  --border-radius-lg: 24px;
+  --border-radius-full: 9999px;
+  
+  /* Gölge (shadow) değerleri */
+  --shadow-sm: 0 2px 5px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 10px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 10px 20px rgba(0, 0, 0, 0.12);
+  
+  /* Geçiş süreleri */
+  --transition-fast: 0.2s ease;
+  --transition-normal: 0.3s ease;
+  --transition-slow: 0.5s ease;
+  
+  /* Tipografi */
+  --font-family: 'Montserrat', sans-serif;
+  --font-size-xs: 0.75rem;   /* 12px */
+  --font-size-sm: 0.875rem;  /* 14px */
+  --font-size-md: 1rem;      /* 16px */
+  --font-size-lg: 1.125rem;  /* 18px */
+  --font-size-xl: 1.25rem;   /* 20px */
+  --font-size-2xl: 1.5rem;   /* 24px */
+  --font-size-3xl: 1.875rem; /* 30px */
+  --font-size-4xl: 2.25rem;  /* 36px */
+}
+
+/* Temel stiller */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-family);
+  color: var(--text-dark);
+  background-color: var(--background-light);
+  line-height: 1.6;
+}
+
+/* Container */
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--spacing-md);
+}
+
+/* OddMenu tarzı butonlar */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--font-size-md);
+  font-weight: 500;
+  padding: 0.5rem 1.25rem;
+  border-radius: var(--border-radius-full);
+  border: none;
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  text-decoration: none;
+}
+
+.btn-primary {
+  background-color: var(--primary);
+  color: white;
+}
+
+.btn-primary:hover {
+  background-color: var(--primary-dark);
+}
+
+.btn-outline {
+  background-color: transparent;
+  border: 1px solid var(--primary);
+  color: var(--primary);
+}
+
+.btn-outline:hover {
+  background-color: var(--primary);
+  color: white;
+}
+
+/* OddMenu tarzı arama kutusu */
+.search-input-wrapper {
+  position: relative;
+  margin-bottom: var(--spacing-lg);
+}
+
+.search-input {
+  width: 100%;
+  padding: 0.75rem 1rem 0.75rem 2.5rem;
+  border-radius: var(--border-radius-full);
+  border: none;
+  background-color: #F1F1F1;
+  font-size: var(--font-size-md);
+  transition: all var(--transition-normal);
+}
+
+.search-input:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(255, 154, 118, 0.25);
+}
+
+.search-icon {
+  position: absolute;
+  left: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-light);
+}
+
+.search-button {
+  position: absolute;
+  right: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+/* OddMenu tarzı tab butonları */
+.tab-buttons {
+  display: flex;
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-lg);
+}
+
+.tab-button {
+  padding: 0.5rem 1.25rem;
+  border-radius: var(--border-radius-full);
+  font-size: var(--font-size-md);
+  font-weight: 500;
+  background-color: transparent;
+  border: 1px solid var(--primary);
+  color: var(--primary);
+  cursor: pointer;
+  transition: all var(--transition-normal);
+}
+
+.tab-button.active,
+.tab-button:hover {
+  background-color: var(--primary);
+  color: white;
+}
+
+/* Ana içerik */
+.main-content {
+  padding: var(--spacing-md) 0 var(--spacing-xl);
+  min-height: calc(100vh - 180px);
+}
+
+/* Header */
+.header {
+  background-color: white;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  padding: var(--spacing-md) 0;
+  box-shadow: var(--shadow-sm);
+}
+
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  height: 60px;
+  width: auto;
+}
+
+.back-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1.25rem;
+  border-radius: var(--border-radius-full);
+  border: none;
+  background-color: var(--primary);
+  color: white;
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--transition-normal);
+}
+
+.back-button:hover {
+  background-color: var(--primary-dark);
+}
+
+/* Footer */
+.footer {
+  background-color: white;
+  padding: var(--spacing-lg) 0;
+  border-top: 1px solid var(--border-color);
+  text-align: center;
+  color: var(--text-light);
+  font-size: var(--font-size-sm);
+}
+
+/* Loader */
+.loader-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.loader {
+  width: 40px;
+  height: 40px;
+  border: 3px solid rgba(255, 154, 118, 0.3);
+  border-radius: 50%;
+  border-top: 3px solid var(--primary);
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Responsive tasarım için medya sorguları */
+@media (max-width: 768px) {
+  .container {
+    padding: 0 var(--spacing-sm);
+  }
+  
+  .logo {
+    height: 50px;
+  }
+}
+
+@media (max-width: 576px) {
+  .tab-buttons {
+    flex-wrap: wrap;
+  }
+  
+  .tab-button {
+    font-size: var(--font-size-sm);
+  }
+}
+
+
+
+
 :root {
     /* Color palette */
     --primary: #005a9e;
@@ -654,6 +929,3 @@
     margin-top: var(--spacing-md);
     box-shadow: var(--shadow-sm);
   }
-  
-
-  

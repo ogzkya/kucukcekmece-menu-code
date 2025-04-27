@@ -1,18 +1,22 @@
-// frontend/src/pages/customer/Home.jsx - Modern tasarıma güncellenmiş versiyon
+// frontend/src/pages/customer/Home.jsx - Restoran Ana Sayfası Güncellemesi
+
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { getCategories, getRestaurantBySlug } from '../../api';
 import Header from '../../components/common/Header';
 import Footer from '../../components/common/Footer';
 import CategoryCard from '../../components/customer/CategoryCard';
+import SearchBox from '../../components/common/SearchBox';
 import Loader from '../../components/common/Loader';
 
 const Home = () => {
   const { slug } = useParams();
   const [restaurant, setRestaurant] = useState(null);
   const [categories, setCategories] = useState([]);
+  const [filteredCategories, setFilteredCategories] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
     const fetchData = async () => {
@@ -24,6 +28,7 @@ const Home = () => {
         ]);
         
         setCategories(categoriesRes.data);
+        setFilteredCategories(categoriesRes.data);
         setRestaurant(restaurantRes.data);
         setLoading(false);
       } catch (error) {
@@ -35,6 +40,23 @@ const Home = () => {
 
     fetchData();
   }, [slug]);
+  
+  // Arama fonksiyonu
+  useEffect(() => {
+    if (searchQuery.trim() === '') {
+      setFilteredCategories(categories);
+    } else {
+      const query = searchQuery.toLowerCase();
+      const filtered = categories.filter(category => 
+        category.name.toLowerCase().includes(query)
+      );
+      setFilteredCategories(filtered);
+    }
+  }, [searchQuery, categories]);
+  
+  const handleSearch = (e) => {
+    setSearchQuery(e.target.value);
+  };
 
   if (loading) return <Loader />;
 
@@ -67,7 +89,7 @@ const Home = () => {
                 </p>
                 
                 {restaurant.description && (
-                  <p className="restaurant-description mt-2">
+                  <p className="restaurant-description">
                     {restaurant.description}
                   </p>
                 )}
@@ -75,13 +97,22 @@ const Home = () => {
             </div>
           )}
           
-          <h3 className="section-title">Menü Kategorileri</h3>
+          <div className="tab-buttons">
+            <button className="tab-button active">Ana Menü</button>
+            <button className="tab-button">Bar</button>
+          </div>
+          
+          <SearchBox 
+            value={searchQuery}
+            onChange={handleSearch}
+            placeholder="Kategorilerde ara..."
+          />
           
           <div className="category-cards">
             <div className="row">
-              {categories.length > 0 ? (
-                categories.map((category) => (
-                  <div key={category._id} className="col-12 col-sm-6 col-lg-4 mb-4">
+              {filteredCategories.length > 0 ? (
+                filteredCategories.map((category) => (
+                  <div key={category._id} className="col-12 col-md-6 col-lg-4 mb-4">
                     <CategoryCard category={category} restaurantSlug={slug} />
                   </div>
                 ))

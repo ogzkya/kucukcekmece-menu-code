@@ -50,15 +50,43 @@ export const getRestaurantById = async (req, res) => {
 // @access  Private/Admin
 export const createRestaurant = async (req, res) => {
   try {
-    const { name, address, description, isActive } = req.body;
+    const { name, address, description, isActive, slug } = req.body;
     let imageUrl = '';
 
     if (req.file) {
       imageUrl = `/uploads/${req.file.filename}`;
     }
 
+    // Slug oluşturma yardımcı fonksiyonu
+    const createSlugFromName = (name) => {
+      // Türkçe karakterleri değiştir
+      let slugText = name.toLowerCase()
+        .replace(/ğ/g, 'g')
+        .replace(/ü/g, 'u')
+        .replace(/ş/g, 's')
+        .replace(/ı/g, 'i')
+        .replace(/ö/g, 'o')
+        .replace(/ç/g, 'c')
+        .replace(/Ğ/g, 'G')
+        .replace(/Ü/g, 'U')
+        .replace(/Ş/g, 'S')
+        .replace(/İ/g, 'I')
+        .replace(/Ö/g, 'O')
+        .replace(/Ç/g, 'C');
+      
+      // Boşlukları ve özel karakterleri tire ile değiştir
+      slugText = slugText.replace(/\s+/g, '-')           // Boşlukları tire ile değiştir
+                .replace(/[^\w\-]+/g, '')        // Alfanümerik olmayan karakterleri kaldır
+                .replace(/\-\-+/g, '-')          // Birden fazla tireyi tek tire yap
+                .replace(/^-+/, '')              // Baştaki tireleri kaldır
+                .replace(/-+$/, '');             // Sondaki tireleri kaldır
+      
+      return slugText;
+    };
+
     const restaurant = new Restaurant({
       name,
+      slug: slug || createSlugFromName(name), // Form'da slug yoksa name'den oluştur
       address,
       description: description || '',
       imageUrl,

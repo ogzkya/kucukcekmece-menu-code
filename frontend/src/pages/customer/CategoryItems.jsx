@@ -1,10 +1,12 @@
-// frontend/src/pages/customer/CategoryItems.jsx - Modern tasarıma güncellenmiş versiyon
+// frontend/src/pages/customer/CategoryItems.jsx - Kategori İçeriği Sayfası Güncellemesi
+
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { getMenuItemsByCategory, getCategoryById } from '../../api';
 import Header from '../../components/common/Header';
 import Footer from '../../components/common/Footer';
 import MenuItemCard from '../../components/customer/MenuItemCard';
+import SearchBox from '../../components/common/SearchBox';
 import Loader from '../../components/common/Loader';
 
 const CategoryItems = () => {
@@ -82,36 +84,18 @@ const CategoryItems = () => {
           
           <div className="category-header">
             {category && (
-              <>
-                <h2 className="category-title">{category.name}</h2>
-                <div className="search-bar">
-                  <div className="search-input-wrapper">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="search-icon">
-                      <circle cx="11" cy="11" r="8"></circle>
-                      <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                    </svg>
-                    <input
-                      type="text"
-                      className="search-input"
-                      placeholder="Menüde ara..."
-                      value={searchQuery}
-                      onChange={handleSearch}
-                    />
-                    {searchQuery && (
-                      <button 
-                        className="search-clear-btn"
-                        onClick={() => setSearchQuery('')}
-                        aria-label="Aramayı temizle"
-                      >
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                          <line x1="18" y1="6" x2="6" y2="18"></line>
-                          <line x1="6" y1="6" x2="18" y2="18"></line>
-                        </svg>
-                      </button>
-                    )}
-                  </div>
+              <div>
+                <div className="tab-buttons">
+                  <button className="tab-button active">Ana Menü</button>
+                  <button className="tab-button">Bar</button>
                 </div>
-              </>
+                
+                <SearchBox 
+                  value={searchQuery}
+                  onChange={handleSearch}
+                  placeholder="Menüde ara..."
+                />
+              </div>
             )}
           </div>
           
@@ -119,7 +103,7 @@ const CategoryItems = () => {
             {filteredItems.length > 0 ? (
               <div className="row">
                 {filteredItems.map((menuItem) => (
-                  <div key={menuItem._id} className="col-12 col-sm-6 col-lg-4 mb-4">
+                  <div key={menuItem._id} className="col-12 col-md-6 col-lg-4 mb-4">
                     <MenuItemCard menuItem={menuItem} restaurantSlug={slug} />
                   </div>
                 ))}

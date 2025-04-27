@@ -1,137 +1,186 @@
 /* frontend/src/styles/facility-cards.css */
+/* frontend/src/styles/facility-cards.css - OddMenu tarzı restoran/tesis kartları */
 
-/* Tesis kartı ana stili */
-.facility-card {
+/* Ana tesis/restoran container */
+.facilities-container {
+    margin: var(--spacing-xl) 0;
+  }
+  
+  /* Restoran seçim başlığı */
+  .restaurant-selection-title {
+    font-size: var(--font-size-3xl);
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: var(--spacing-sm);
+  }
+  
+  .restaurant-selection-subtitle {
+    font-size: var(--font-size-lg);
+    color: var(--text-light);
+    text-align: center;
+    margin-bottom: var(--spacing-xl);
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  /* Tesis/Restoran kartı */
+  .facility-card {
     display: block;
-    background-color: #fff;
-    border-radius: 12px;
+    background-color: white;
+    border-radius: var(--border-radius-md);
     overflow: hidden;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    box-shadow: var(--shadow-md);
     height: 100%;
     color: inherit;
     text-decoration: none;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+    margin-bottom: var(--spacing-lg);
   }
   
   .facility-card:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
   }
   
-  /* Tesis görseli kapsayıcısı - SABIT YÜKSEKLIK */
+  /* Tesis/Restoran görseli container */
   .facility-image-container {
     position: relative;
     width: 100%;
-    height: 200px; /* Sabit yükseklik */
+    height: 180px;
     overflow: hidden;
   }
   
-  /* Tesis görseli - TAM SIĞDIRMA */
+  /* Tesis/Restoran görseli */
   .facility-image {
     width: 100%;
     height: 100%;
-    object-fit: cover; /* Bu özellik fotoğrafı kapsayıcıya TAM SIĞDIRIR */
-    transition: transform 0.5s ease;
+    object-fit: cover;
+    transition: transform var(--transition-slow);
   }
   
   .facility-card:hover .facility-image {
     transform: scale(1.05);
   }
   
-  /* Görsel yer tutucu */
+  /* Tesis/Restoran görsel yer tutucu */
   .facility-image-placeholder {
     width: 100%;
     height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: #f8f9fa;
-    color: #adb5bd;
+    background-color: var(--background-light);
+    color: var(--text-light);
   }
   
-  /* Tesis içerik alanı */
+  /* Tesis/Restoran içerik alanı */
   .facility-content {
-    padding: 16px;
+    padding: var(--spacing-lg);
   }
   
-  /* Tesis başlığı */
+  /* Tesis/Restoran başlık */
   .facility-title {
-    font-size: 1.25rem;
+    font-size: var(--font-size-xl);
     font-weight: 600;
-    color: #333;
-    margin-bottom: 8px;
-    line-height: 1.4;
+    color: var(--text-dark);
+    margin-bottom: var(--spacing-sm);
   }
   
-  /* Tesis adresi */
+  /* Tesis/Restoran adres */
   .facility-address {
     display: flex;
-    align-items: center;
-    color: #666;
-    font-size: 0.9rem;
-    margin-bottom: 10px;
+    align-items: flex-start;
+    color: var(--text-light);
+    font-size: var(--font-size-sm);
+    margin-bottom: var(--spacing-sm);
   }
   
-  /* Tesis açıklaması */
+  .facility-address svg {
+    margin-right: var(--spacing-xs);
+    flex-shrink: 0;
+    margin-top: 0.2rem;
+  }
+  
+  /* Tesis/Restoran açıklama */
   .facility-description {
-    color: #666;
-    font-size: 0.9rem;
-    line-height: 1.5;
-    margin-bottom: 12px;
+    color: var(--text-light);
+    font-size: var(--font-size-sm);
+    margin-bottom: var(--spacing-md);
     
-    /* Açıklamayı 2 satırla sınırla ve taşarsa üç nokta göster */
+    /* Fazla yazıları kırp */
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
-    text-overflow: ellipsis;
   }
   
-  /* Tesis kartı buton alanı */
+  /* Tesis/Restoran kartı buton alanı */
   .facility-action {
+    margin-top: var(--spacing-md);
     display: flex;
     justify-content: flex-end;
-    margin-top: 10px;
   }
   
   /* "Menüyü Görüntüle" butonu */
   .facility-button {
     display: inline-flex;
     align-items: center;
-    gap: 6px;
+    gap: var(--spacing-xs);
     font-weight: 500;
-    color: #005a9e;
-    font-size: 0.9rem;
-    padding: 4px 0;
-    position: relative;
+    color: var(--primary);
+    font-size: var(--font-size-sm);
+    transition: color var(--transition-normal);
   }
   
-  /* Buton altında animasyonlu çizgi */
-  .facility-button::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 0;
-    height: 2px;
-    background-color: #005a9e;
-    transition: width 0.3s ease;
+  .facility-card:hover .facility-button {
+    color: var(--primary-dark);
   }
   
-  .facility-card:hover .facility-button::after {
-    width: 100%;
-  }
-  
-  /* Buton içindeki ok ikonu animasyonu */
+  /* Buton içindeki ok ikonu */
   .facility-button svg {
-    transition: transform 0.3s ease;
+    transition: transform var(--transition-normal);
   }
   
   .facility-card:hover .facility-button svg {
     transform: translateX(4px);
   }
   
-  /* Animasyonlar */
+  /* Restoran bilgileri bölümü */
+  .restaurant-info {
+    background-color: white;
+    border-radius: var(--border-radius-md);
+    padding: var(--spacing-lg);
+    margin-bottom: var(--spacing-xl);
+    box-shadow: var(--shadow-md);
+  }
+  
+  .restaurant-name {
+    font-size: var(--font-size-2xl);
+    font-weight: 600;
+    margin-bottom: var(--spacing-sm);
+  }
+  
+  .restaurant-meta {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+  }
+  
+  .restaurant-address {
+    display: flex;
+    align-items: center;
+    color: var(--text-light);
+    font-size: var(--font-size-md);
+  }
+  
+  .restaurant-description {
+    color: var(--text-light);
+    font-size: var(--font-size-md);
+    margin-top: var(--spacing-md);
+  }
+  
+  /* Fade-in Animasyonu */
   @keyframes fadeInUp {
     from {
       opacity: 0;
@@ -143,26 +192,196 @@
     }
   }
   
-  .facilities-row .col-12 {
+  .facility-card {
     animation: fadeInUp 0.5s ease backwards;
   }
   
-  /* Kartları kademeli olarak animasyon yap */
-  .facilities-row .col-12:nth-child(1) {
+  .facilities-row .col-12:nth-child(1) .facility-card {
     animation-delay: 0.1s;
   }
-  .facilities-row .col-12:nth-child(2) {
+  
+  .facilities-row .col-12:nth-child(2) .facility-card {
     animation-delay: 0.2s;
   }
-  .facilities-row .col-12:nth-child(3) {
+  
+  .facilities-row .col-12:nth-child(3) .facility-card {
     animation-delay: 0.3s;
   }
-  .facilities-row .col-12:nth-child(4) {
+  
+  .facilities-row .col-12:nth-child(4) .facility-card {
     animation-delay: 0.4s;
   }
-  .facilities-row .col-12:nth-child(5) {
+  
+  .facilities-row .col-12:nth-child(5) .facility-card {
     animation-delay: 0.5s;
   }
-  .facilities-row .col-12:nth-child(6) {
+  
+  .facilities-row .col-12:nth-child(6) .facility-card {
     animation-delay: 0.6s;
   }
+/* Tesis kartı ana stili */
+.facility-card {
+  display: block;
+  background-color: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  height: 100%;
+  color: inherit;
+  text-decoration: none;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.facility-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+/* Tesis görseli kapsayıcısı - SABIT YÜKSEKLIK */
+.facility-image-container {
+  position: relative;
+  width: 100%;
+  height: 200px; /* Sabit yükseklik */
+  overflow: hidden;
+}
+
+/* Tesis görseli - TAM SIĞDIRMA */
+.facility-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Bu özellik fotoğrafı kapsayıcıya TAM SIĞDIRIR */
+  transition: transform 0.5s ease;
+}
+
+.facility-card:hover .facility-image {
+  transform: scale(1.05);
+}
+
+/* Görsel yer tutucu */
+.facility-image-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f8f9fa;
+  color: #adb5bd;
+}
+
+/* Tesis içerik alanı */
+.facility-content {
+  padding: 16px;
+}
+
+/* Tesis başlığı */
+.facility-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 8px;
+  line-height: 1.4;
+}
+
+/* Tesis adresi */
+.facility-address {
+  display: flex;
+  align-items: center;
+  color: #666;
+  font-size: 0.9rem;
+  margin-bottom: 10px;
+}
+
+/* Tesis açıklaması */
+.facility-description {
+  color: #666;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  margin-bottom: 12px;
+  
+  /* Açıklamayı 2 satırla sınırla ve taşarsa üç nokta göster */
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Tesis kartı buton alanı */
+.facility-action {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 10px;
+}
+
+/* "Menüyü Görüntüle" butonu */
+.facility-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 500;
+  color: #005a9e;
+  font-size: 0.9rem;
+  padding: 4px 0;
+  position: relative;
+}
+
+/* Buton altında animasyonlu çizgi */
+.facility-button::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: #005a9e;
+  transition: width 0.3s ease;
+}
+
+.facility-card:hover .facility-button::after {
+  width: 100%;
+}
+
+/* Buton içindeki ok ikonu animasyonu */
+.facility-button svg {
+  transition: transform 0.3s ease;
+}
+
+.facility-card:hover .facility-button svg {
+  transform: translateX(4px);
+}
+
+/* Animasyonlar */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.facilities-row .col-12 {
+  animation: fadeInUp 0.5s ease backwards;
+}
+
+/* Kartları kademeli olarak animasyon yap */
+.facilities-row .col-12:nth-child(1) {
+  animation-delay: 0.1s;
+}
+.facilities-row .col-12:nth-child(2) {
+  animation-delay: 0.2s;
+}
+.facilities-row .col-12:nth-child(3) {
+  animation-delay: 0.3s;
+}
+.facilities-row .col-12:nth-child(4) {
+  animation-delay: 0.4s;
+}
+.facilities-row .col-12:nth-child(5) {
+  animation-delay: 0.5s;
+}
+.facilities-row .col-12:nth-child(6) {
+  animation-delay: 0.6s;
+}
