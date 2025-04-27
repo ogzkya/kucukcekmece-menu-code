@@ -1,5 +1,4 @@
-// Header Bileşeni Güncellemesi
-// frontend/src/components/common/Header.jsx
+// frontend/src/components/common/Header.jsx - Düzeltilmiş header
 
 import React from 'react';
 import { Link } from 'react-router-dom';
@@ -28,7 +27,9 @@ const Header = ({ title = 'Küçükçekmece Belediyesi QR Menü', showBackButton
           </div>
         )}
         
-        <h1 className="header-title">{title}</h1>
+        <div className="header-content">
+          <h1 className="header-title">{title}</h1>
+        </div>
         
         <div className="language-selector">
           <select defaultValue="tr" className="language-select">

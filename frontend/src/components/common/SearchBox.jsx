@@ -1,5 +1,4 @@
-// Arama Kutusu Bileşeni
-// frontend/src/components/common/SearchBox.jsx
+// frontend/src/components/common/SearchBox.jsx - Arama bileşeni
 
 import React from 'react';
 

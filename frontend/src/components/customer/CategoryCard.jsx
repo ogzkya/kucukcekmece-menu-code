@@ -1,5 +1,4 @@
-// Kategori Kartı Bileşeni Güncellemesi
-// frontend/src/components/customer/CategoryCard.jsx
+// frontend/src/components/customer/CategoryCard.jsx - Kategori kartı bileşeni
 
 import React from 'react';
 import { Link } from 'react-router-dom';

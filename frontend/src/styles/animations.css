@@ -1,10 +1,66 @@
-/* frontend/src/styles/animations.css - Animasyon ve interaktif stiller */
+/* frontend/src/styles/animations.css - Animasyonlar */
 
-/* Staggered Animation for Category Cards */
-.category-card {
-    opacity: 0;
-    transform: translateY(20px);
+/* Fade In Animasyonu */
+@keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  
+  /* Fade In Up Animasyonu */
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  /* Pulse Animasyonu */
+  @keyframes pulse {
+    0% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.05);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+  
+  /* Spin Animasyonu */
+  @keyframes spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  
+  /* Ripple Animasyonu */
+  @keyframes ripple {
+    0% {
+      transform: scale(0);
+      opacity: 1;
+    }
+    100% {
+      transform: scale(2.5);
+      opacity: 0;
+    }
+  }
+  
+  /* Kategori Kartları için Kademeli Animasyon */
+  .category-card {
     animation: fadeInUp 0.5s ease forwards;
+    opacity: 0;
   }
   
   .category-card:nth-child(1) {
@@ -31,18 +87,7 @@
     animation-delay: 0.6s;
   }
   
-  @keyframes fadeInUp {
-    from {
-      opacity: 0;
-      transform: translateY(20px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-  
-  /* Menu Item Card Hover Effects */
+  /* Menü Öğesi Kartları Hover Efektleri */
   .menu-item-card {
     transition: transform 0.3s ease, box-shadow 0.3s ease;
   }
@@ -65,11 +110,9 @@
     transform: scale(1.05);
   }
   
-  /* Price Tag Effect */
+  /* Fiyat Etiket Efekti */
   .menu-item-price {
     position: relative;
-    font-weight: 600;
-    color: var(--primary);
     display: inline-block;
   }
   
@@ -88,11 +131,10 @@
     width: 100%;
   }
   
-  /* Button Hover Effects */
+  /* Buton Hover Ripple Efekti */
   .btn {
     position: relative;
     overflow: hidden;
-    transition: all 0.3s ease;
   }
   
   .btn::after {
@@ -113,100 +155,35 @@
     animation: ripple 1s ease-out;
   }
   
-  @keyframes ripple {
-    0% {
-      transform: scale(0, 0);
-      opacity: 0.5;
-    }
-    20% {
-      transform: scale(25, 25);
-      opacity: 0.3;
-    }
-    100% {
-      opacity: 0;
-      transform: scale(40, 40);
-    }
+  /* Menu Item Details Animasyon */
+  .menu-item-detail {
+    animation: fadeInUp 0.5s ease forwards;
   }
   
-  /* Restaurant Card Animation */
-  .restaurant-card {
-    opacity: 0;
-    transform: translateY(20px);
-    animation: fadeInUp 0.6s ease forwards;
-  }
-  
-  .restaurant-card:nth-child(1) {
-    animation-delay: 0.1s;
-  }
-  
-  .restaurant-card:nth-child(2) {
-    animation-delay: 0.2s;
-  }
-  
-  .restaurant-card:nth-child(3) {
-    animation-delay: 0.3s;
-  }
-  
-  .restaurant-card:nth-child(4) {
-    animation-delay: 0.4s;
-  }
-  
-  /* Loading Skeleton Animation */
-  .skeleton {
-    background: linear-gradient(90deg, var(--surface) 25%, var(--surface-hover) 37%, var(--surface) 63%);
-    background-size: 400% 100%;
-    animation: skeleton-loading 1.4s ease infinite;
-  }
-  
-  @keyframes skeleton-loading {
-    0% {
-      background-position: 100% 50%;
-    }
-    100% {
-      background-position: 0 50%;
-    }
-  }
-  
-  /* Fade in animation for main content */
+  /* Ana içerik için fadeIn */
   .main-content {
     animation: fadeIn 0.5s ease;
   }
   
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-    }
-    to {
-      opacity: 1;
-    }
-  }
-  
-  /* Menu item details animation */
-  .menu-item-detail {
+  /* Sayfa Değişiminde Animasyon */
+  .page-transition-enter {
     opacity: 0;
     transform: translateY(20px);
-    animation: fadeInUp 0.5s ease forwards;
   }
   
-  /* Pulse animation for action buttons */
-  .view-menu-btn {
-    position: relative;
+  .page-transition-enter-active {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.3s, transform 0.3s;
   }
   
-  .view-menu-btn svg {
-    transition: transform 0.3s ease;
+  .page-transition-exit {
+    opacity: 1;
+    transform: translateY(0);
   }
   
-  .view-menu-btn:hover svg {
-    transform: translateX(5px);
-  }
-  
-  /* Header sticky animation */
-  .header {
-    transition: box-shadow 0.3s ease, background-color 0.3s ease;
-  }
-  
-  .header.sticky {
-    box-shadow: var(--shadow-md);
-    background-color: rgba(255, 255, 255, 0.97);
+  .page-transition-exit-active {
+    opacity: 0;
+    transform: translateY(-20px);
+    transition: opacity 0.3s, transform 0.3s;
   }

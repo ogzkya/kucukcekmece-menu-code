@@ -1,7 +1,4 @@
-/* frontend/src/styles/additional.css - Ek modern stiller */
-
-/* Özel Arama Çubuğu Stilleri */
-/* frontend/src/styles/additional.css - OddMenu tarzı kategori kartları */
+/* frontend/src/styles/additional.css - Kategori ve menü öğesi stilleri */
 
 /* Kategori kartları container */
 .category-cards {
@@ -82,6 +79,7 @@
     box-shadow: var(--shadow-md);
     margin-bottom: var(--spacing-lg);
     transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+    height: 100%;
   }
   
   .menu-item-card:hover {
@@ -95,6 +93,7 @@
     width: 100%;
     height: 200px;
     overflow: hidden;
+    display: block;
   }
   
   /* Menü öğesi görseli */
@@ -217,6 +216,7 @@
     font-size: var(--font-size-2xl);
     font-weight: 600;
     margin-bottom: var(--spacing-sm);
+    color: var(--text-dark);
   }
   
   .menu-item-detail-description {
@@ -237,314 +237,137 @@
     font-weight: 600;
     color: var(--primary);
   }
-.search-bar {
-    max-width: 500px;
-    margin-bottom: var(--spacing-lg);
-  }
   
-  .search-input-wrapper {
-    position: relative;
-    display: flex;
-    align-items: center;
-  }
-  
-  .search-icon {
-    position: absolute;
-    left: var(--spacing-md);
-    color: var(--text-tertiary);
-  }
-  
-  .search-input {
-    width: 100%;
-    padding: var(--spacing-md) var(--spacing-md) var(--spacing-md) calc(var(--spacing-md) * 3);
-    border-radius: var(--radius-full);
-    border: 1px solid var(--border);
-    background-color: var(--background);
-    transition: all var(--transition-normal);
-  }
-  
-  .search-input:focus {
-    outline: none;
-    border-color: var(--primary-light);
-    box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.15);
-  }
-  
-  .search-clear-btn {
-    position: absolute;
-    right: var(--spacing-md);
-    background: transparent;
-    border: none;
-    color: var(--text-tertiary);
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: color var(--transition-fast);
-  }
-  
-  .search-clear-btn:hover {
-    color: var(--text-primary);
-  }
-  
-  /* Kategori Başlık ve İçerik Stilleri */
-  .category-header {
-    margin: var(--spacing-lg) 0 var(--spacing-xl);
-  }
-  
-  .category-title {
-    font-size: var(--font-size-3xl);
-    font-weight: 700;
-    margin-bottom: var(--spacing-md);
-  }
-  
-  .category-card-content {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-    padding: 0 var(--spacing-lg);
-  }
-  
-  .category-card-icon {
+  .menu-item-detail-weight {
+    font-size: var(--font-size-sm);
     color: var(--text-light);
-    opacity: 0.8;
-    transition: transform var(--transition-normal), opacity var(--transition-normal);
   }
   
-  .category-card:hover .category-card-icon {
-    transform: translateX(4px);
-    opacity: 1;
-  }
-  
-  /* Restaurant Selection Styles */
-  .restaurant-selection-title {
-    font-size: var(--font-size-3xl);
-    font-weight: 700;
-    margin-bottom: var(--spacing-sm);
-  }
-  
-  .restaurant-selection-subtitle {
-    color: var(--text-secondary);
-    max-width: 600px;
-    margin-left: auto;
-    margin-right: auto;
-  }
-  
-  .restaurant-card-title {
-    font-size: var(--font-size-xl);
-    font-weight: 600;
-    margin-bottom: var(--spacing-sm);
-    color: var(--text-primary);
-  }
-  
-  .restaurant-card-address {
-    display: flex;
-    align-items: center;
-    color: var(--text-secondary);
-    font-size: var(--font-size-sm);
-    margin-bottom: var(--spacing-xs);
-  }
-  
-  .restaurant-card-description {
-    color: var(--text-secondary);
-    font-size: var(--font-size-sm);
-  }
-  
-  .restaurant-image-placeholder {
-    height: 180px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: var(--surface);
-    color: var(--text-tertiary);
-  }
-  
-  .view-menu-btn {
-    display: inline-flex;
-    align-items: center;
-    color: var(--primary);
-    font-weight: 500;
-    transition: all var(--transition-normal);
-  }
-  
-  .restaurant-card:hover .view-menu-btn {
-    color: var(--primary-dark);
-  }
-  
-  .restaurant-card:hover .view-menu-btn svg {
-    transform: translateX(4px);
-  }
-  
-  .restaurant-card-action {
-    display: flex;
-    justify-content: flex-end;
-  }
-  
-  /* Boş Durum Stilleri */
-  .empty-state {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    padding: var(--spacing-2xl) var(--spacing-lg);
-    color: var(--text-tertiary);
-  }
-  
-  .empty-state svg {
-    margin-bottom: var(--spacing-md);
-    color: var(--text-tertiary);
-  }
-  
-  .empty-state p {
-    font-size: var(--font-size-lg);
-    margin-bottom: var(--spacing-md);
-  }
-  
-  /* Menu Item Detail Styles */
-  .menu-item-detail-header {
-    position: relative;
-  }
-  
-  .menu-item-detail-meta {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin: var(--spacing-lg) 0;
+  .menu-item-detail-allergens {
+    margin-top: var(--spacing-lg);
+    margin-bottom: var(--spacing-lg);
   }
   
   .menu-item-detail-section-title {
     font-size: var(--font-size-lg);
     font-weight: 600;
     margin-bottom: var(--spacing-sm);
-    color: var(--text-primary);
+    color: var(--text-dark);
+  }
+  
+  .menu-item-detail-allergens-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-sm);
+  }
+  
+  .menu-item-detail-allergen {
+    font-size: var(--font-size-sm);
+    color: var(--text-light);
+    background-color: var(--background-light);
+    padding: 0.25rem 0.75rem;
+    border-radius: var(--border-radius-full);
   }
   
   .menu-item-detail-footer {
-    margin-top: var(--spacing-xl);
-    padding-top: var(--spacing-md);
-    border-top: 1px solid var(--divider);
+    border-top: 1px solid var(--border-color);
+    padding-top: var(--spacing-lg);
+    margin-top: var(--spacing-lg);
   }
   
-  .menu-item-detail-weight {
+  .menu-item-detail-disclaimer {
+    color: var(--text-light);
     font-size: var(--font-size-sm);
-    color: var(--text-tertiary);
   }
   
   .item-detail-actions {
-    margin-bottom: var(--spacing-2xl);
+    margin-top: var(--spacing-lg);
     display: flex;
     justify-content: center;
   }
   
   .item-back-btn {
-    min-width: 180px;
-  }
-  
-  /* Menu Item Card Allergens Styles */
-  .menu-item-allergens {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--spacing-xs);
-  }
-  
-  .menu-item-allergen, .menu-item-allergen-more {
-    font-size: var(--font-size-xs);
-    padding: var(--spacing-xs) var(--spacing-sm);
-    background-color: var(--surface);
-    border-radius: var(--radius-full);
-    color: var(--text-secondary);
-  }
-  
-  .menu-item-allergen-more {
-    background-color: var(--primary-light);
-    color: var(--text-light);
-  }
-  
-  /* Mobile Navigation */
-  .mobile-nav-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-  
-  .mobile-nav-item {
-    margin-bottom: var(--spacing-sm);
-  }
-  
-  .mobile-nav-link {
-    display: block;
-    padding: var(--spacing-md);
-    font-size: var(--font-size-lg);
-    border-radius: var(--radius-md);
-    transition: all var(--transition-fast);
-  }
-  
-  .mobile-nav-link:hover {
-    background-color: var(--surface);
-  }
-  
-  .mobile-menu-close {
-    background: transparent;
-    border: none;
-    color: var(--text-primary);
-    cursor: pointer;
-  }
-  
-  .mobile-menu-header {
     margin-bottom: var(--spacing-xl);
   }
   
-  /* Footer Style Updates */
-  .footer-logo {
-    height: 50px;
+  /* Restaurant selection styles */
+  .restaurant-selection-title {
+    font-size: var(--font-size-3xl);
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: var(--spacing-sm);
+    color: var(--text-dark);
   }
   
-  .footer-heading {
-    font-size: var(--font-size-md);
+  .restaurant-selection-subtitle {
+    font-size: var(--font-size-lg);
+    color: var(--text-light);
+    text-align: center;
+    margin-bottom: var(--spacing-xl);
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  .restaurant-selection-header {
+    margin-bottom: var(--spacing-xl);
+  }
+  
+  /* Restaurant Info Section */
+  .restaurant-info {
+    background-color: white;
+    border-radius: var(--border-radius-md);
+    padding: var(--spacing-lg);
+    margin-bottom: var(--spacing-xl);
+    box-shadow: var(--shadow-md);
+  }
+  
+  .restaurant-name {
+    font-size: var(--font-size-2xl);
     font-weight: 600;
-    color: var(--text-primary);
+    margin-bottom: var(--spacing-sm);
+    color: var(--text-dark);
   }
   
-  .footer-links {
-    list-style: none;
-    padding: 0;
-    margin: 0;
+  .restaurant-meta {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
   }
   
-  .footer-link-item {
-    margin-bottom: var(--spacing-xs);
+  .restaurant-address {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    color: var(--text-light);
+    font-size: var(--font-size-md);
   }
   
-  .footer-link {
-    color: var(--text-secondary);
-    transition: color var(--transition-fast);
+  .restaurant-description {
+    color: var(--text-light);
+    font-size: var(--font-size-md);
+    margin-top: var(--spacing-md);
   }
   
-  .footer-link:hover {
+  /* View Details Button */
+  .view-details {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-xs);
     color: var(--primary);
+    font-size: var(--font-size-sm);
+    font-weight: 500;
+    transition: all var(--transition-normal);
   }
   
-  .footer-contact {
-    font-style: normal;
-    color: var(--text-secondary);
+  .view-details svg {
+    transition: transform var(--transition-normal);
   }
   
-  .footer-contact a {
-    color: var(--text-secondary);
-    transition: color var(--transition-fast);
+  .menu-item-card:hover .view-details {
+    color: var(--primary-dark);
   }
   
-  .footer-contact a:hover {
-    color: var(--primary);
-  }
-  
-  .footer-bottom {
-    border-top: 1px solid var(--divider);
-  }
-  
-  /* Main content padding */
-  .main-content {
-    padding: var(--spacing-xl) 0;
-    min-height: calc(100vh - 200px);
+  .menu-item-card:hover .view-details svg {
+    transform: translateX(3px);
   }
