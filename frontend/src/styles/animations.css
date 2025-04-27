@@ -1,0 +1,212 @@
+/* frontend/src/styles/animations.css - Animasyon ve interaktif stiller */
+
+/* Staggered Animation for Category Cards */
+.category-card {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 0.5s ease forwards;
+  }
+  
+  .category-card:nth-child(1) {
+    animation-delay: 0.1s;
+  }
+  
+  .category-card:nth-child(2) {
+    animation-delay: 0.2s;
+  }
+  
+  .category-card:nth-child(3) {
+    animation-delay: 0.3s;
+  }
+  
+  .category-card:nth-child(4) {
+    animation-delay: 0.4s;
+  }
+  
+  .category-card:nth-child(5) {
+    animation-delay: 0.5s;
+  }
+  
+  .category-card:nth-child(6) {
+    animation-delay: 0.6s;
+  }
+  
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  /* Menu Item Card Hover Effects */
+  .menu-item-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .menu-item-card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-lg);
+  }
+  
+  .menu-item-image-container {
+    overflow: hidden;
+    position: relative;
+  }
+  
+  .menu-item-image {
+    transition: transform 0.5s ease;
+  }
+  
+  .menu-item-card:hover .menu-item-image {
+    transform: scale(1.05);
+  }
+  
+  /* Price Tag Effect */
+  .menu-item-price {
+    position: relative;
+    font-weight: 600;
+    color: var(--primary);
+    display: inline-block;
+  }
+  
+  .menu-item-price::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: var(--primary);
+    transition: width 0.3s ease;
+  }
+  
+  .menu-item-card:hover .menu-item-price::after {
+    width: 100%;
+  }
+  
+  /* Button Hover Effects */
+  .btn {
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+  }
+  
+  .btn::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 5px;
+    height: 5px;
+    background: rgba(255, 255, 255, 0.3);
+    opacity: 0;
+    border-radius: 100%;
+    transform: scale(1, 1) translate(-50%);
+    transform-origin: 50% 50%;
+  }
+  
+  .btn:hover::after {
+    animation: ripple 1s ease-out;
+  }
+  
+  @keyframes ripple {
+    0% {
+      transform: scale(0, 0);
+      opacity: 0.5;
+    }
+    20% {
+      transform: scale(25, 25);
+      opacity: 0.3;
+    }
+    100% {
+      opacity: 0;
+      transform: scale(40, 40);
+    }
+  }
+  
+  /* Restaurant Card Animation */
+  .restaurant-card {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 0.6s ease forwards;
+  }
+  
+  .restaurant-card:nth-child(1) {
+    animation-delay: 0.1s;
+  }
+  
+  .restaurant-card:nth-child(2) {
+    animation-delay: 0.2s;
+  }
+  
+  .restaurant-card:nth-child(3) {
+    animation-delay: 0.3s;
+  }
+  
+  .restaurant-card:nth-child(4) {
+    animation-delay: 0.4s;
+  }
+  
+  /* Loading Skeleton Animation */
+  .skeleton {
+    background: linear-gradient(90deg, var(--surface) 25%, var(--surface-hover) 37%, var(--surface) 63%);
+    background-size: 400% 100%;
+    animation: skeleton-loading 1.4s ease infinite;
+  }
+  
+  @keyframes skeleton-loading {
+    0% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0 50%;
+    }
+  }
+  
+  /* Fade in animation for main content */
+  .main-content {
+    animation: fadeIn 0.5s ease;
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  
+  /* Menu item details animation */
+  .menu-item-detail {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 0.5s ease forwards;
+  }
+  
+  /* Pulse animation for action buttons */
+  .view-menu-btn {
+    position: relative;
+  }
+  
+  .view-menu-btn svg {
+    transition: transform 0.3s ease;
+  }
+  
+  .view-menu-btn:hover svg {
+    transform: translateX(5px);
+  }
+  
+  /* Header sticky animation */
+  .header {
+    transition: box-shadow 0.3s ease, background-color 0.3s ease;
+  }
+  
+  .header.sticky {
+    box-shadow: var(--shadow-md);
+    background-color: rgba(255, 255, 255, 0.97);
+  }
