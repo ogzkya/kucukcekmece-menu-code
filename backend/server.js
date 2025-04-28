@@ -56,6 +56,17 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 // Start server
+
 app.listen(PORT, () => {
   console.log(`Server running in ${process.env.NODE_ENV} mode on port ${PORT}`.yellow.bold);
 });
+
+// backend/server.js - Kullanıcı route'larının eklenmesi
+
+// Tüm import'lardan sonra ve diğer route'lardan önce aşağıdaki satırı ekleyin:
+import userRoutes from './routes/userRoutes.js';
+
+// Diğer app.use satırlarının yanına aşağıdaki satırı ekleyin:
+app.use('/api/users', userRoutes);
+
+// Geri kalan kodlar aynı kalacak

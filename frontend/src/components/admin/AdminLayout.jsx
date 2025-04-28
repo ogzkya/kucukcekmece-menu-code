@@ -35,6 +35,14 @@ const AdminLayout = ({ children, title }) => {
             </Link>
           </li>
           <li className="admin-sidebar-menu-item">
+  <Link 
+    to="/admin/users" 
+    className={location.pathname === '/admin/users' ? 'active' : ''}
+  >
+    Admin Kullanıcıları
+  </Link>
+</li>
+          <li className="admin-sidebar-menu-item">
             <Link 
               to="/admin/menu-items" 
               className={location.pathname === '/admin/menu-items' ? 'active' : ''}

@@ -24,6 +24,10 @@ import AdminCategories from './pages/admin/Categories';
 import AdminMenuItems from './pages/admin/MenuItems';
 import AdminRestaurants from './pages/admin/Restaurants';
 
+import Users from './pages/admin/Users';
+import UserNew from './pages/admin/UserNew';
+import UserEdit from './pages/admin/UserEdit';
+
 // Admin Form Pages
 import CategoryNew from './pages/admin/CategoryNew';
 import CategoryEdit from './pages/admin/CategoryEdit';
@@ -31,6 +35,7 @@ import MenuItemNew from './pages/admin/MenuItemNew';
 import MenuItemEdit from './pages/admin/MenuItemEdit';
 import RestaurantNew from './pages/admin/RestaurantNew';
 import RestaurantEdit from './pages/admin/RestaurantEdit';
+
 
 // Protected Route Component
 import ProtectedRoute from './components/common/ProtectedRoute';
@@ -48,7 +53,30 @@ const App = () => {
           
           {/* Admin Routes */}
           <Route path="/admin/login" element={<AdminLogin />} />
-          
+          <Route 
+  path="/admin/users" 
+  element={
+    <ProtectedRoute>
+      <Users />
+    </ProtectedRoute>
+  } 
+/>
+<Route 
+  path="/admin/users/new" 
+  element={
+    <ProtectedRoute>
+      <UserNew />
+    </ProtectedRoute>
+  } 
+/>
+<Route 
+  path="/admin/users/edit/:id" 
+  element={
+    <ProtectedRoute>
+      <UserEdit />
+    </ProtectedRoute>
+  } 
+/>
           {/* Admin Dashboard */}
           <Route 
             path="/admin" 

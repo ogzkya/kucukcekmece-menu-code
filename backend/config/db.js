@@ -4,11 +4,25 @@ import colors from 'colors';
 
 const connectDB = async () => {
   try {
-    const conn = await mongoose.connect(process.env.MONGODB_URI);
+    const mongoUri = process.env.MONGODB_URI || 'mongodb://localhost:27017/qrmenu';
+    
+    // Bağlantı ayarları - node depricated warning hatalarını engellemek için
+    const options = {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+      serverSelectionTimeoutMS: 5000 // Zaman aşımı ayarı
+    };
+    
+    const conn = await mongoose.connect(mongoUri, options);
     console.log(`MongoDB Connected: ${conn.connection.host}`.cyan.underline);
   } catch (error) {
     console.error(`Error: ${error.message}`.red.bold);
-    process.exit(1);
+    // İsteğe bağlı - Hata durumunda uygulamayı sonlandırmamak için aşağıdaki satırı kaldırabilirsiniz
+    // process.exit(1);
+    
+    // Alternatif olarak - yeniden bağlanma girişimi eklenebilir
+    console.log('Attempting to reconnect to MongoDB in 5 seconds...'.yellow);
+    setTimeout(connectDB, 5000);
   }
 };
 

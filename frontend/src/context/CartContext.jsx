@@ -1,5 +1,5 @@
 // frontend/src/context/CartContext.jsx
-import React, { createContext, useState, useContext, useEffect } from 'react';
+import React, { createContext, useState, useContext, useEffect, useCallback } from 'react';
 
 // Sepet context'i oluşturuldu
 const CartContext = createContext();
@@ -32,8 +32,8 @@ export const CartProvider = ({ children }) => {
     localStorage.setItem('oddmenu_table', tableNumber);
   }, [tableNumber]);
 
-  // Sepete ürün ekle
-  const addToCart = (menuItem, quantity = 1, notes = '') => {
+  // Sepete ürün ekle - useCallback ile optimize edildi
+  const addToCart = useCallback((menuItem, quantity = 1, notes = '') => {
     setCartItems(prevItems => {
       // Aynı ürün daha önce eklenmiş mi kontrol et
       const existingItemIndex = prevItems.findIndex(item => item._id === menuItem._id);
@@ -41,7 +41,12 @@ export const CartProvider = ({ children }) => {
       if (existingItemIndex >= 0) {
         // Ürün zaten sepette, miktarını artır
         const updatedItems = [...prevItems];
-        updatedItems[existingItemIndex].quantity += quantity;
+        updatedItems[existingItemIndex] = {
+          ...updatedItems[existingItemIndex],
+          quantity: updatedItems[existingItemIndex].quantity + quantity,
+          // Not yoksa önceki notu koru, varsa güncelle
+          notes: notes || updatedItems[existingItemIndex].notes
+        };
         return updatedItems;
       } else {
         // Yeni ürün ekle
@@ -53,15 +58,15 @@ export const CartProvider = ({ children }) => {
         }];
       }
     });
-  };
+  }, []);
 
   // Sepetten ürün çıkar
-  const removeFromCart = (itemId) => {
+  const removeFromCart = useCallback((itemId) => {
     setCartItems(prevItems => prevItems.filter(item => item._id !== itemId));
-  };
+  }, []);
 
   // Ürün miktarını güncelle
-  const updateQuantity = (itemId, newQuantity) => {
+  const updateQuantity = useCallback((itemId, newQuantity) => {
     if (newQuantity <= 0) {
       removeFromCart(itemId);
       return;
@@ -72,43 +77,43 @@ export const CartProvider = ({ children }) => {
         item._id === itemId ? { ...item, quantity: newQuantity } : item
       )
     );
-  };
+  }, [removeFromCart]);
   
   // Ürün notunu güncelle
-  const updateItemNote = (itemId, note) => {
+  const updateItemNote = useCallback((itemId, note) => {
     setCartItems(prevItems => 
       prevItems.map(item => 
         item._id === itemId ? { ...item, notes: note } : item
       )
     );
-  };
+  }, []);
 
   // Sepeti temizle
-  const clearCart = () => {
+  const clearCart = useCallback(() => {
     setCartItems([]);
     setOrderNote('');
-  };
+  }, []);
 
   // Sepetteki toplam ürün sayısını hesapla
-  const getCartCount = () => {
+  const getCartCount = useCallback(() => {
     return cartItems.reduce((total, item) => total + item.quantity, 0);
-  };
+  }, [cartItems]);
 
   // Sepetteki toplam tutarı hesapla
-  const getCartTotal = () => {
+  const getCartTotal = useCallback(() => {
     return cartItems.reduce((total, item) => total + (item.price * item.quantity), 0);
-  };
+  }, [cartItems]);
 
   // Sepetteki ürün sayısını kontrol et
-  const isInCart = (menuItemId) => {
+  const isInCart = useCallback((menuItemId) => {
     return cartItems.some(item => item._id === menuItemId);
-  };
+  }, [cartItems]);
   
   // Sepetteki bir ürünün miktarını bul
-  const getItemQuantity = (menuItemId) => {
+  const getItemQuantity = useCallback((menuItemId) => {
     const item = cartItems.find(item => item._id === menuItemId);
     return item ? item.quantity : 0;
-  };
+  }, [cartItems]);
 
   return (
     <CartContext.Provider value={{

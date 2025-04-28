@@ -77,4 +77,11 @@ export const getAdminRestaurants = () => api.get('/restaurants/admin');
 export const login = (credentials) => api.post('/auth/login', credentials);
 export const getUserProfile = () => api.get('/auth/profile');
 
+// User API
+export const getAdminUsers = () => api.get('/users/admins');
+export const createAdminUser = (userData) => api.post('/users/admin', userData);
+export const getUserById = (id) => api.get(`/users/${id}`);
+export const updateUser = (id, userData) => api.put(`/users/${id}`, userData);
+export const deleteUser = (id) => api.delete(`/users/${id}`);
+
 export default api;
