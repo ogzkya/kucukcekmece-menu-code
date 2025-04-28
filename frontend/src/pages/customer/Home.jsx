@@ -1,4 +1,4 @@
-// frontend/src/pages/customer/Home.jsx - Restoran Ana Sayfası Güncellemesi
+// frontend/src/pages/customer/Home.jsx - Sepet entegrasyonu eklenmiş anasayfa
 
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
@@ -8,6 +8,8 @@ import Footer from '../../components/common/Footer';
 import CategoryCard from '../../components/customer/CategoryCard';
 import SearchBox from '../../components/common/SearchBox';
 import Loader from '../../components/common/Loader';
+import CartButton from '../../components/customer/CartButton';
+import Cart from '../../components/customer/Cart';
 
 const Home = () => {
   const { slug } = useParams();
@@ -17,6 +19,9 @@ const Home = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
+  
+  // Sepet state'i
+  const [showCart, setShowCart] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -56,6 +61,19 @@ const Home = () => {
   
   const handleSearch = (e) => {
     setSearchQuery(e.target.value);
+  };
+  
+  // Sepet işlevleri
+  const handleOpenCart = () => {
+    setShowCart(true);
+    // Body scroll'u engelle
+    document.body.style.overflow = 'hidden';
+  };
+  
+  const handleCloseCart = () => {
+    setShowCart(false);
+    // Body scroll'u tekrar etkinleştir
+    document.body.style.overflow = '';
   };
 
   if (loading) return <Loader />;
@@ -99,7 +117,7 @@ const Home = () => {
           
           <div className="tab-buttons">
             <button className="tab-button active">Ana Menü</button>
-            <button className="tab-button">Bar</button>
+            
           </div>
           
           <SearchBox 
@@ -134,6 +152,10 @@ const Home = () => {
         </div>
       </main>
       <Footer />
+      
+      {/* Sepet butonu ve sepet modülü */}
+      <CartButton onClick={handleOpenCart} />
+      {showCart && <Cart onClose={handleCloseCart} />}
     </>
   );
 };

@@ -1,4 +1,4 @@
-// frontend/src/pages/customer/ItemDetail.jsx - Modern tasarıma güncellenmiş versiyon
+// frontend/src/pages/customer/ItemDetail.jsx - Sepet entegrasyonu eklenmiş ürün detay sayfası
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { getMenuItemById } from '../../api';
@@ -6,12 +6,17 @@ import Header from '../../components/common/Header';
 import Footer from '../../components/common/Footer';
 import MenuItemDetail from '../../components/customer/MenuItemDetail';
 import Loader from '../../components/common/Loader';
+import CartButton from '../../components/customer/CartButton';
+import Cart from '../../components/customer/Cart';
 
 const ItemDetail = () => {
   const { id, slug } = useParams();
   const [menuItem, setMenuItem] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  
+  // Sepet state'i
+  const [showCart, setShowCart] = useState(false);
 
   useEffect(() => {
     const fetchMenuItem = async () => {
@@ -35,6 +40,19 @@ const ItemDetail = () => {
       return `/tesis/${slug}/category/${menuItem.category}`;
     }
     return `/tesis/${slug}`;
+  };
+  
+  // Sepet işlevleri
+  const handleOpenCart = () => {
+    setShowCart(true);
+    // Body scroll'u engelle
+    document.body.style.overflow = 'hidden';
+  };
+  
+  const handleCloseCart = () => {
+    setShowCart(false);
+    // Body scroll'u tekrar etkinleştir
+    document.body.style.overflow = '';
   };
 
   if (loading) return <Loader />;
@@ -79,6 +97,10 @@ const ItemDetail = () => {
         </div>
       </main>
       <Footer />
+      
+      {/* Sepet butonu ve sepet modülü */}
+      <CartButton onClick={handleOpenCart} />
+      {showCart && <Cart onClose={handleCloseCart} />}
     </>
   );
 };

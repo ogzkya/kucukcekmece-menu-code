@@ -1,5 +1,6 @@
-// frontend/src/components/customer/MenuItemDetail.jsx - Modern tasarıma güncellenmiş versiyon
+// frontend/src/components/customer/MenuItemDetail.jsx - Güncellenmiş menü öğesi detay sayfası
 import React from 'react';
+import AddToCartButton from './AddToCartButton';
 
 const MenuItemDetail = ({ menuItem }) => {
   if (!menuItem) return null;
@@ -35,6 +36,9 @@ const MenuItemDetail = ({ menuItem }) => {
             )}
           </div>
         </div>
+        
+        {/* Sipariş ekleme bölümü */}
+        <AddToCartButton menuItem={menuItem} isDetail={true} />
         
         {menuItem.allergens && menuItem.allergens.length > 0 && (
           <div className="menu-item-detail-allergens">

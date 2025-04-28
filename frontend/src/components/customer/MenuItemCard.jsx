@@ -1,7 +1,8 @@
-// frontend/src/components/customer/MenuItemCard.jsx - Menü öğesi kartı
+// frontend/src/components/customer/MenuItemCard.jsx - Menü öğesi kartı (Güncellenmiş)
 
 import React from 'react';
 import { Link } from 'react-router-dom';
+import AddToCartButton from './AddToCartButton';
 
 const MenuItemCard = ({ menuItem, restaurantSlug }) => {
   // Metin kısaltma fonksiyonu
@@ -30,7 +31,11 @@ const MenuItemCard = ({ menuItem, restaurantSlug }) => {
             {formatPrice(menuItem.price)} ₺
           </div>
         )}
+        
+        {/* Sepete ekle butonu */}
+        <AddToCartButton menuItem={menuItem} />
       </Link>
+      
       <div className="menu-item-content">
         <Link to={`/tesis/${restaurantSlug}/item/${menuItem._id}`}>
           <h3 className="menu-item-title">{menuItem.name}</h3>

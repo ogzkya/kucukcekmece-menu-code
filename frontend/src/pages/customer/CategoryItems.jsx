@@ -1,4 +1,4 @@
-// frontend/src/pages/customer/CategoryItems.jsx - Kategori İçeriği Sayfası Güncellemesi
+// frontend/src/pages/customer/CategoryItems.jsx - Sepet entegrasyonu eklenmiş kategori sayfası
 
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
@@ -8,6 +8,8 @@ import Footer from '../../components/common/Footer';
 import MenuItemCard from '../../components/customer/MenuItemCard';
 import SearchBox from '../../components/common/SearchBox';
 import Loader from '../../components/common/Loader';
+import CartButton from '../../components/customer/CartButton';
+import Cart from '../../components/customer/Cart';
 
 const CategoryItems = () => {
   const { id, slug } = useParams();
@@ -17,6 +19,9 @@ const CategoryItems = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
+  
+  // Sepet state'i
+  const [showCart, setShowCart] = useState(false);
   
   useEffect(() => {
     const fetchData = async () => {
@@ -58,6 +63,19 @@ const CategoryItems = () => {
   const handleSearch = (e) => {
     setSearchQuery(e.target.value);
   };
+  
+  // Sepet işlevleri
+  const handleOpenCart = () => {
+    setShowCart(true);
+    // Body scroll'u engelle
+    document.body.style.overflow = 'hidden';
+  };
+  
+  const handleCloseCart = () => {
+    setShowCart(false);
+    // Body scroll'u tekrar etkinleştir
+    document.body.style.overflow = '';
+  };
 
   if (loading) return <Loader />;
 
@@ -87,7 +105,8 @@ const CategoryItems = () => {
               <div>
                 <div className="tab-buttons">
                   <button className="tab-button active">Ana Menü</button>
-                  <button className="tab-button">Bar</button>
+                  {/* ** <button className="tab-button active">yedek</button>**  */}
+                 
                 </div>
                 
                 <SearchBox 
@@ -138,6 +157,10 @@ const CategoryItems = () => {
         </div>
       </main>
       <Footer />
+      
+      {/* Sepet butonu ve sepet modülü */}
+      <CartButton onClick={handleOpenCart} />
+      {showCart && <Cart onClose={handleCloseCart} />}
     </>
   );
 };
