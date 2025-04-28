@@ -1,9 +1,7 @@
-// frontend/src/components/common/Header.jsx - Düzeltilmiş header
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const Header = ({ title = 'Küçükçekmece Belediyesi QR Menü', showBackButton, backTo }) => {
+const Header = ({ title = 'Küçükçekmece Belediyesi Sosyal Tesisler', showBackButton, backTo }) => {
   return (
     <header className="header">
       <div className="container header-inner">
@@ -16,19 +14,19 @@ const Header = ({ title = 'Küçükçekmece Belediyesi QR Menü', showBackButton
             Geri
           </button>
         ) : (
-          <div className="header-logo">
-            <Link to="/">
+          <div className="header-logo-container">
+            <Link to="/" className="header-logo-link">
               <img 
                 src="/assets/logo.png" 
-                alt="Küçükçekmece Belediyesi Logo" 
-                className="logo" 
+                alt="" 
+                className="header-logo" 
               />
             </Link>
           </div>
         )}
         
-        <div className="header-content">
-          <h1 className="header-title">{title}</h1>
+        <div className="header-title-container">
+          <h1 className="header-title">Küçükçekmece Belediyesi Sosyal Tesisleri</h1>
         </div>
         
         <div className="language-selector">

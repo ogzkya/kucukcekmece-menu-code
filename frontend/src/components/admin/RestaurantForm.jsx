@@ -5,6 +5,7 @@ const RestaurantForm = ({ restaurant, onSubmit, buttonText = 'Kaydet' }) => {
   const [name, setName] = useState(restaurant?.name || '');
   const [slug, setSlug] = useState(restaurant?.slug || '');
   const [address, setAddress] = useState(restaurant?.address || '');
+  const [phone, setPhone] = useState(restaurant?.phone || '');  // Telefon alanı eklendi
   const [description, setDescription] = useState(restaurant?.description || '');
   const [isActive, setIsActive] = useState(restaurant?.isActive !== false);
   const [image, setImage] = useState(null);
@@ -25,8 +26,9 @@ const RestaurantForm = ({ restaurant, onSubmit, buttonText = 'Kaydet' }) => {
 
     const formData = new FormData();
     formData.append('name', name);
-    formData.append('slug', slug); // Slug alanını ekledik
+    formData.append('slug', slug);
     formData.append('address', address);
+    formData.append('phone', phone);  // Telefon alanı eklendi
     formData.append('description', description);
     formData.append('isActive', isActive);
     
@@ -87,6 +89,19 @@ const RestaurantForm = ({ restaurant, onSubmit, buttonText = 'Kaydet' }) => {
         />
       </div>
       
+      {/* Telefon Numarası Alanı Eklendi */}
+      <div className="form-group">
+        <label htmlFor="phone" className="form-label">Telefon Numarası</label>
+        <input
+          type="text"
+          id="phone"
+          className="form-control"
+          value={phone}
+          onChange={(e) => setPhone(e.target.value)}
+          placeholder="Örn: 0212 123 45 67"
+        />
+      </div>
+      
       <div className="form-group">
         <label htmlFor="description" className="form-label">Açıklama</label>
         <textarea
@@ -97,7 +112,7 @@ const RestaurantForm = ({ restaurant, onSubmit, buttonText = 'Kaydet' }) => {
           rows="3"
         ></textarea>
       </div>
-      
+
       <div className="form-group">
         <div className="form-check">
           <input
@@ -131,7 +146,7 @@ const RestaurantForm = ({ restaurant, onSubmit, buttonText = 'Kaydet' }) => {
         )}
       </div>
       
-      <button type="submit" className="btn btn-primary">
+        <button type="submit" className="btn btn-primary">
         {buttonText}
       </button>
     </form>

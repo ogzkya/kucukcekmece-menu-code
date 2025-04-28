@@ -50,7 +50,7 @@ export const getRestaurantById = async (req, res) => {
 // @access  Private/Admin
 export const createRestaurant = async (req, res) => {
   try {
-    const { name, address, description, isActive, slug } = req.body;
+    const { name, address, description, isActive, slug, phone } = req.body;
     let imageUrl = '';
 
     if (req.file) {
@@ -83,11 +83,11 @@ export const createRestaurant = async (req, res) => {
       
       return slugText;
     };
-
     const restaurant = new Restaurant({
       name,
-      slug: slug || createSlugFromName(name), // Form'da slug yoksa name'den oluştur
+      slug: slug || createSlugFromName(name),
       address,
+      phone, // Telefon alanı eklendi
       description: description || '',
       imageUrl,
       isActive: isActive !== undefined ? isActive : true,
@@ -106,13 +106,14 @@ export const createRestaurant = async (req, res) => {
 // @access  Private/Admin
 export const updateRestaurant = async (req, res) => {
   try {
-    const { name, address, description, isActive } = req.body;
+    const { name, address, description, isActive, phone } = req.body;
     
     const restaurant = await Restaurant.findById(req.params.id);
     
     if (restaurant) {
       restaurant.name = name || restaurant.name;
       restaurant.address = address || restaurant.address;
+      restaurant.phone = phone !== undefined ? phone : restaurant.phone; // Telefon alanı eklendi
       restaurant.description = description !== undefined ? description : restaurant.description;
       restaurant.isActive = isActive !== undefined ? isActive : restaurant.isActive;
       
