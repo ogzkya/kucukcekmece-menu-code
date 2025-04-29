@@ -1,8 +1,8 @@
-// frontend/src/components/customer/MenuItemCard.jsx - Menü öğesi kartı (Güncellenmiş)
+// frontend/src/components/customer/MenuItemCard.jsx - Sepet işlevselliği devre dışı bırakılmış menü öğesi kartı
 
 import React from 'react';
 import { Link } from 'react-router-dom';
-import AddToCartButton from './AddToCartButton';
+// import AddToCartButton from './AddToCartButton';
 
 const MenuItemCard = ({ menuItem, restaurantSlug }) => {
   // Metin kısaltma fonksiyonu
@@ -32,8 +32,8 @@ const MenuItemCard = ({ menuItem, restaurantSlug }) => {
           </div>
         )}
         
-        {/* Sepete ekle butonu */}
-        <AddToCartButton menuItem={menuItem} />
+        {/* Sepete ekle butonu - devre dışı bırakıldı */}
+        {/* <AddToCartButton menuItem={menuItem} /> */}
       </Link>
       
       <div className="menu-item-content">

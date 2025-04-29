@@ -1,4 +1,5 @@
-// frontend/src/components/customer/AddToCartButton.jsx - Direkt ekleme yapabilecek şekilde düzeltilmiş
+// frontend/src/components/customer/AddToCartButton.jsx - Devre dışı bırakıldı
+/*
 import React, { useState } from 'react';
 import { useCart } from '../../context/CartContext';
 
@@ -204,5 +205,11 @@ const AddToCartButton = ({ menuItem, isDetail = false }) => {
     </div>
   );
 };
+*/
 
-export default AddToCartButton;
+// Boş bileşen sağlayın ki başka bileşenler hata vermesin
+const AddToCartButton = () => null;
+const CartButton = () => null;
+const Cart = () => null;
+
+export { AddToCartButton, CartButton, Cart };

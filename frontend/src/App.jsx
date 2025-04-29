@@ -1,15 +1,15 @@
-// frontend/src/App.jsx - CartProvider'ın eklenmiş hali
+// frontend/src/App.jsx - CartProvider'ın devre dışı bırakılmış hali
 import React from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
-import { CartProvider } from './context/CartContext'; // Sepet context provider'ı eklendi
+// import { CartProvider } from './context/CartContext'; // Sepet context provider'ı devre dışı bırakıldı
 
 // CSS dosyalarını import et
 import './styles/index.css';       // Temel stil ayarları ve renk paleti
 import './styles/additional.css';  // Ek stiller ve bileşen özellikleri
 import './styles/facility-cards.css'; // Tesis/restoran kartları stilleri
 import './styles/animations.css';  // Animasyonlar
-import './styles/cart.css';       // Yeni eklenen sepet stilleri
+// import './styles/cart.css';       // Sepet stilleri devre dışı bırakıldı
 
 // Customer Pages
 import Home from './pages/customer/Home';
@@ -43,7 +43,8 @@ import ProtectedRoute from './components/common/ProtectedRoute';
 const App = () => {
   return (
     <AuthProvider>
-      <CartProvider> {/* CartProvider eklendi */}
+      {/* CartProvider devre dışı bırakıldı */}
+      {/* <CartProvider> */}
         <Routes>
           {/* Customer Routes */}
           <Route path="/" element={<RestaurantSelection />} />
@@ -54,29 +55,29 @@ const App = () => {
           {/* Admin Routes */}
           <Route path="/admin/login" element={<AdminLogin />} />
           <Route 
-  path="/admin/users" 
-  element={
-    <ProtectedRoute>
-      <Users />
-    </ProtectedRoute>
-  } 
-/>
-<Route 
-  path="/admin/users/new" 
-  element={
-    <ProtectedRoute>
-      <UserNew />
-    </ProtectedRoute>
-  } 
-/>
-<Route 
-  path="/admin/users/edit/:id" 
-  element={
-    <ProtectedRoute>
-      <UserEdit />
-    </ProtectedRoute>
-  } 
-/>
+            path="/admin/users" 
+            element={
+              <ProtectedRoute>
+                <Users />
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/admin/users/new" 
+            element={
+              <ProtectedRoute>
+                <UserNew />
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/admin/users/edit/:id" 
+            element={
+              <ProtectedRoute>
+                <UserEdit />
+              </ProtectedRoute>
+            } 
+          />
           {/* Admin Dashboard */}
           <Route 
             path="/admin" 
@@ -168,7 +169,7 @@ const App = () => {
           {/* Redirect for unknown routes */}
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
-      </CartProvider>
+      {/* </CartProvider> */}
     </AuthProvider> 
   );
 }

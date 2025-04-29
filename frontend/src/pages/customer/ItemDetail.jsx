@@ -1,4 +1,4 @@
-// frontend/src/pages/customer/ItemDetail.jsx - Sepet entegrasyonu eklenmiş ürün detay sayfası
+// frontend/src/pages/customer/ItemDetail.jsx - Sepet entegrasyonu devre dışı bırakılmış ürün detay sayfası
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { getMenuItemById } from '../../api';
@@ -6,8 +6,8 @@ import Header from '../../components/common/Header';
 import Footer from '../../components/common/Footer';
 import MenuItemDetail from '../../components/customer/MenuItemDetail';
 import Loader from '../../components/common/Loader';
-import CartButton from '../../components/customer/CartButton';
-import Cart from '../../components/customer/Cart';
+// import CartButton from '../../components/customer/CartButton';
+// import Cart from '../../components/customer/Cart';
 
 const ItemDetail = () => {
   const { id, slug } = useParams();
@@ -15,8 +15,8 @@ const ItemDetail = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   
-  // Sepet state'i
-  const [showCart, setShowCart] = useState(false);
+  // Sepet state'i devre dışı bırakıldı
+  // const [showCart, setShowCart] = useState(false);
 
   useEffect(() => {
     const fetchMenuItem = async () => {
@@ -42,7 +42,8 @@ const ItemDetail = () => {
     return `/tesis/${slug}`;
   };
   
-  // Sepet işlevleri
+  // Sepet işlevleri devre dışı bırakıldı
+  /*
   const handleOpenCart = () => {
     setShowCart(true);
     // Body scroll'u engelle
@@ -54,6 +55,7 @@ const ItemDetail = () => {
     // Body scroll'u tekrar etkinleştir
     document.body.style.overflow = '';
   };
+  */
 
   if (loading) return <Loader />;
 
@@ -98,9 +100,9 @@ const ItemDetail = () => {
       </main>
       <Footer />
       
-      {/* Sepet butonu ve sepet modülü */}
-      <CartButton onClick={handleOpenCart} />
-      {showCart && <Cart onClose={handleCloseCart} />}
+      {/* Sepet butonu ve sepet modülü - devre dışı bırakıldı */}
+      {/* <CartButton onClick={handleOpenCart} /> */}
+      {/* {showCart && <Cart onClose={handleCloseCart} />} */}
     </>
   );
 };

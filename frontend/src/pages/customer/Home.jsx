@@ -1,4 +1,4 @@
-// frontend/src/pages/customer/Home.jsx - Sepet entegrasyonu eklenmiş anasayfa
+// frontend/src/pages/customer/Home.jsx - Sepet entegrasyonu devre dışı bırakılmış anasayfa
 
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
@@ -8,8 +8,8 @@ import Footer from '../../components/common/Footer';
 import CategoryCard from '../../components/customer/CategoryCard';
 import SearchBox from '../../components/common/SearchBox';
 import Loader from '../../components/common/Loader';
-import CartButton from '../../components/customer/CartButton';
-import Cart from '../../components/customer/Cart';
+// import CartButton from '../../components/customer/CartButton';
+// import Cart from '../../components/customer/Cart';
 
 const Home = () => {
   const { slug } = useParams();
@@ -20,8 +20,8 @@ const Home = () => {
   const [error, setError] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
   
-  // Sepet state'i
-  const [showCart, setShowCart] = useState(false);
+  // Sepet state'i devre dışı bırakıldı
+  // const [showCart, setShowCart] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -63,7 +63,8 @@ const Home = () => {
     setSearchQuery(e.target.value);
   };
   
-  // Sepet işlevleri
+  // Sepet işlevleri devre dışı bırakıldı
+  /*
   const handleOpenCart = () => {
     setShowCart(true);
     // Body scroll'u engelle
@@ -75,6 +76,7 @@ const Home = () => {
     // Body scroll'u tekrar etkinleştir
     document.body.style.overflow = '';
   };
+  */
 
   if (loading) return <Loader />;
 
@@ -153,9 +155,9 @@ const Home = () => {
       </main>
       <Footer />
       
-      {/* Sepet butonu ve sepet modülü */}
-      <CartButton onClick={handleOpenCart} />
-      {showCart && <Cart onClose={handleCloseCart} />}
+      {/* Sepet butonu ve sepet modülü - devre dışı bırakıldı */}
+      {/* <CartButton onClick={handleOpenCart} /> */}
+      {/* {showCart && <Cart onClose={handleCloseCart} />} */}
     </>
   );
 };

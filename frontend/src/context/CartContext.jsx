@@ -1,4 +1,5 @@
-// frontend/src/context/CartContext.jsx
+// frontend/src/context/CartContext.jsx - Tüm dosya devre dışı bırakıldı
+/*
 import React, { createContext, useState, useContext, useEffect, useCallback } from 'react';
 
 // Sepet context'i oluşturuldu
@@ -135,6 +136,30 @@ export const CartProvider = ({ children }) => {
       {children}
     </CartContext.Provider>
   );
+};
+
+export default CartContext;
+*/
+
+// Boş context ve provider sağlayın ki başka bileşenler hata vermesin
+import React, { createContext } from 'react';
+
+const CartContext = createContext();
+
+export const useCart = () => ({
+  cartItems: [],
+  addToCart: () => {},
+  removeFromCart: () => {},
+  updateQuantity: () => {},
+  clearCart: () => {},
+  getCartCount: () => 0,
+  getCartTotal: () => 0,
+  isInCart: () => false,
+  getItemQuantity: () => 0
+});
+
+export const CartProvider = ({ children }) => {
+  return <>{children}</>;
 };
 
 export default CartContext;

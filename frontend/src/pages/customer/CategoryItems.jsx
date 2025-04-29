@@ -1,4 +1,4 @@
-// frontend/src/pages/customer/CategoryItems.jsx - Sepet entegrasyonu eklenmiş kategori sayfası
+// frontend/src/pages/customer/CategoryItems.jsx - Sepet entegrasyonu devre dışı bırakılmış kategori sayfası
 
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
@@ -8,8 +8,8 @@ import Footer from '../../components/common/Footer';
 import MenuItemCard from '../../components/customer/MenuItemCard';
 import SearchBox from '../../components/common/SearchBox';
 import Loader from '../../components/common/Loader';
-import CartButton from '../../components/customer/CartButton';
-import Cart from '../../components/customer/Cart';
+// import CartButton from '../../components/customer/CartButton';
+// import Cart from '../../components/customer/Cart';
 
 const CategoryItems = () => {
   const { id, slug } = useParams();
@@ -20,8 +20,8 @@ const CategoryItems = () => {
   const [error, setError] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
   
-  // Sepet state'i
-  const [showCart, setShowCart] = useState(false);
+  // Sepet state'i devre dışı bırakıldı
+  // const [showCart, setShowCart] = useState(false);
   
   useEffect(() => {
     const fetchData = async () => {
@@ -64,7 +64,8 @@ const CategoryItems = () => {
     setSearchQuery(e.target.value);
   };
   
-  // Sepet işlevleri
+  // Sepet işlevleri devre dışı bırakıldı
+  /*
   const handleOpenCart = () => {
     setShowCart(true);
     // Body scroll'u engelle
@@ -76,6 +77,7 @@ const CategoryItems = () => {
     // Body scroll'u tekrar etkinleştir
     document.body.style.overflow = '';
   };
+  */
 
   if (loading) return <Loader />;
 
@@ -158,9 +160,9 @@ const CategoryItems = () => {
       </main>
       <Footer />
       
-      {/* Sepet butonu ve sepet modülü */}
-      <CartButton onClick={handleOpenCart} />
-      {showCart && <Cart onClose={handleCloseCart} />}
+      {/* Sepet butonu ve sepet modülü - devre dışı bırakıldı */}
+      {/* <CartButton onClick={handleOpenCart} /> */}
+      {/* {showCart && <Cart onClose={handleCloseCart} />} */}
     </>
   );
 };
