@@ -17,7 +17,7 @@ const Header = ({ title = 'Küçükçekmece Belediyesi Sosyal Tesisler', showBac
           <div className="header-logo-container">
             <Link to="/" className="header-logo-link">
               <img 
-                src="/public/logo2.png"  style={{ width: '150px', height: '125px' }}
+                src="/logo2.png"  style={{ width: '150px', height: '125px' }}
                 alt="" 
                 className="header-logo" 
               />
