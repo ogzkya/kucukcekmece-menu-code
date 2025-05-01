@@ -1,6 +1,6 @@
-// frontend/src/components/admin/MenuItemForm.jsx
+// frontend/src/components/admin/MenuItemForm.jsx - Tesis tipi seçimi ve kategori filtreleme eklendi
 import React, { useState, useEffect } from 'react';
-import { getCategories } from '../../api';
+import { getAdminCategories } from '../../api';
 
 const MenuItemForm = ({ menuItem, onSubmit, buttonText = 'Kaydet' }) => {
   const [name, setName] = useState(menuItem?.name || '');
@@ -11,9 +11,11 @@ const MenuItemForm = ({ menuItem, onSubmit, buttonText = 'Kaydet' }) => {
   const [allergens, setAllergens] = useState(menuItem?.allergens?.join(', ') || '');
   const [orderIndex, setOrderIndex] = useState(menuItem?.orderIndex || 0);
   const [isActive, setIsActive] = useState(menuItem?.isActive !== false);
+  const [facilityType, setFacilityType] = useState(menuItem?.facilityType || 'social');
   const [image, setImage] = useState(null);
   const [imagePreview, setImagePreview] = useState(menuItem?.imageUrl || '');
   const [categories, setCategories] = useState([]);
+  const [filteredCategories, setFilteredCategories] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
@@ -21,8 +23,12 @@ const MenuItemForm = ({ menuItem, onSubmit, buttonText = 'Kaydet' }) => {
     const fetchCategories = async () => {
       try {
         setLoading(true);
-        const { data } = await getCategories();
+        const { data } = await getAdminCategories();
         setCategories(data);
+        
+        // İlk yüklemede tesis tipine göre kategorileri filtrele
+        filterCategoriesByFacilityType(data, facilityType);
+        
         setLoading(false);
       } catch (error) {
         console.error('Error fetching categories:', error);
@@ -32,7 +38,28 @@ const MenuItemForm = ({ menuItem, onSubmit, buttonText = 'Kaydet' }) => {
     };
 
     fetchCategories();
-  }, []);
+  }, [facilityType]);
+  
+  // Tesis tipi değiştiğinde kategorileri filtrele
+  const filterCategoriesByFacilityType = (categoriesData, type) => {
+    const filtered = categoriesData.filter(cat => cat.facilityType === type);
+    setFilteredCategories(filtered);
+    
+    // Eğer seçili kategori varsa ve yeni tesis tipine uygun değilse kategoriyi sıfırla
+    if (category) {
+      const isCategoryValid = filtered.some(cat => cat._id === category);
+      if (!isCategoryValid) {
+        setCategory('');
+      }
+    }
+  };
+  
+  // Tesis tipi değiştiğinde
+  const handleFacilityTypeChange = (e) => {
+    const newType = e.target.value;
+    setFacilityType(newType);
+    filterCategoriesByFacilityType(categories, newType);
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -60,6 +87,7 @@ const MenuItemForm = ({ menuItem, onSubmit, buttonText = 'Kaydet' }) => {
     formData.append('allergens', allergens);
     formData.append('orderIndex', orderIndex);
     formData.append('isActive', isActive);
+    formData.append('facilityType', facilityType);
     
     if (image) {
       formData.append('image', image);
@@ -129,6 +157,20 @@ const MenuItemForm = ({ menuItem, onSubmit, buttonText = 'Kaydet' }) => {
       </div>
       
       <div className="form-group">
+        <label htmlFor="facilityType" className="form-label">Tesis Türü</label>
+        <select
+          id="facilityType"
+          className="form-control"
+          value={facilityType}
+          onChange={handleFacilityTypeChange}
+        >
+          <option value="social">Sosyal Tesis</option>
+          <option value="retirement">Emekliler Cafesi</option>
+        </select>
+        <small className="text-muted">Menü öğesinin ait olduğu tesis türü</small>
+      </div>
+      
+      <div className="form-group">
         <label htmlFor="category" className="form-label">Kategori</label>
         <select
           id="category"
@@ -136,15 +178,20 @@ const MenuItemForm = ({ menuItem, onSubmit, buttonText = 'Kaydet' }) => {
           value={category}
           onChange={(e) => setCategory(e.target.value)}
           required
-          disabled={loading}
+          disabled={loading || filteredCategories.length === 0}
         >
           <option value="">Kategori Seçin</option>
-          {categories.map((cat) => (
+          {filteredCategories.map((cat) => (
             <option key={cat._id} value={cat._id}>
               {cat.name}
             </option>
           ))}
         </select>
+        {filteredCategories.length === 0 && (
+          <small className="text-danger">
+            Bu tesis türü için kategori bulunmamaktadır. Önce kategori eklemelisiniz.
+          </small>
+        )}
       </div>
       
       <div className="form-group">

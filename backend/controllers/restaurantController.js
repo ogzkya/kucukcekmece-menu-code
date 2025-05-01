@@ -1,4 +1,4 @@
-// backend/controllers/restaurantController.js - Restaurant management
+// backend/controllers/restaurantController.js - Tesis tipi ile ilgili fonksiyonlar eklendi
 import Restaurant from '../models/Restaurant.js';
 
 // @desc    Get all restaurants
@@ -7,6 +7,25 @@ import Restaurant from '../models/Restaurant.js';
 export const getRestaurants = async (req, res) => {
   try {
     const restaurants = await Restaurant.find({ isActive: true });
+    res.json(restaurants);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server Error' });
+  }
+};
+
+// @desc    Get restaurants by facility type
+// @route   GET /api/restaurants/type/:facilityType
+// @access  Public
+export const getRestaurantsByFacilityType = async (req, res) => {
+  try {
+    const { facilityType } = req.params;
+    
+    const restaurants = await Restaurant.find({ 
+      isActive: true,
+      facilityType
+    });
+    
     res.json(restaurants);
   } catch (error) {
     console.error(error);
@@ -50,7 +69,7 @@ export const getRestaurantById = async (req, res) => {
 // @access  Private/Admin
 export const createRestaurant = async (req, res) => {
   try {
-    const { name, address, description, isActive, slug, phone } = req.body;
+    const { name, address, description, isActive, slug, phone, facilityType } = req.body;
     let imageUrl = '';
 
     if (req.file) {
@@ -91,6 +110,7 @@ export const createRestaurant = async (req, res) => {
       description: description || '',
       imageUrl,
       isActive: isActive !== undefined ? isActive : true,
+      facilityType: facilityType || 'social' // Varsayılan olarak sosyal tesis
     });
 
     const createdRestaurant = await restaurant.save();
@@ -106,16 +126,17 @@ export const createRestaurant = async (req, res) => {
 // @access  Private/Admin
 export const updateRestaurant = async (req, res) => {
   try {
-    const { name, address, description, isActive, phone } = req.body;
+    const { name, address, description, isActive, phone, facilityType } = req.body;
     
     const restaurant = await Restaurant.findById(req.params.id);
     
     if (restaurant) {
       restaurant.name = name || restaurant.name;
       restaurant.address = address || restaurant.address;
-      restaurant.phone = phone !== undefined ? phone : restaurant.phone; // Telefon alanı eklendi
+      restaurant.phone = phone !== undefined ? phone : restaurant.phone;
       restaurant.description = description !== undefined ? description : restaurant.description;
       restaurant.isActive = isActive !== undefined ? isActive : restaurant.isActive;
+      restaurant.facilityType = facilityType || restaurant.facilityType;
       
       // Update image if new one is uploaded
       if (req.file) {
@@ -152,23 +173,20 @@ export const deleteRestaurant = async (req, res) => {
   }
 };
 
-// backend/controllers/restaurantController.js - Slug ile tesis getirme fonksiyonu ekle
-// Mevcut fonksiyonlar korunarak, yeni getRestaurantBySlug fonksiyonu ekleniyor
-
 // @desc    Get restaurant by slug
 // @route   GET /api/restaurants/slug/:slug
 // @access  Public
 export const getRestaurantBySlug = async (req, res) => {
-    try {
-      const restaurant = await Restaurant.findOne({ slug: req.params.slug });
-      
-      if (restaurant) {
-        res.json(restaurant);
-      } else {
-        res.status(404).json({ message: 'Tesis bulunamadı' });
-      }
-    } catch (error) {
-      console.error('Error fetching restaurant by slug:', error);
-      res.status(500).json({ message: 'Server Error' });
+  try {
+    const restaurant = await Restaurant.findOne({ slug: req.params.slug });
+    
+    if (restaurant) {
+      res.json(restaurant);
+    } else {
+      res.status(404).json({ message: 'Tesis bulunamadı' });
     }
-  };
+  } catch (error) {
+    console.error('Error fetching restaurant by slug:', error);
+    res.status(500).json({ message: 'Server Error' });
+  }
+};

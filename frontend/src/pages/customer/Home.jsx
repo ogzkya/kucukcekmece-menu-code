@@ -1,15 +1,12 @@
-// frontend/src/pages/customer/Home.jsx - Sepet entegrasyonu devre dışı bırakılmış anasayfa
-
+// frontend/src/pages/customer/Home.jsx - Tesise özel kategorileri getirme
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { getCategories, getRestaurantBySlug } from '../../api';
+import { getCategoriesByFacilityType, getRestaurantBySlug } from '../../api';
 import Header from '../../components/common/Header';
 import Footer from '../../components/common/Footer';
 import CategoryCard from '../../components/customer/CategoryCard';
 import SearchBox from '../../components/common/SearchBox';
 import Loader from '../../components/common/Loader';
-// import CartButton from '../../components/customer/CartButton';
-// import Cart from '../../components/customer/Cart';
 
 const Home = () => {
   const { slug } = useParams();
@@ -19,22 +16,31 @@ const Home = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
-  
-  // Sepet state'i devre dışı bırakıldı
-  // const [showCart, setShowCart] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const [categoriesRes, restaurantRes] = await Promise.all([
-          getCategories(),
-          getRestaurantBySlug(slug)
-        ]);
+        // Önce tesisi getir
+        const restaurantRes = await getRestaurantBySlug(slug);
+        const restaurantData = restaurantRes.data;
+        setRestaurant(restaurantData);
         
-        setCategories(categoriesRes.data);
-        setFilteredCategories(categoriesRes.data);
-        setRestaurant(restaurantRes.data);
+        // facilityType null veya undefined ise varsayılan değer kullan
+        const facilityType = restaurantData?.facilityType || 'social';
+        
+        // Tesis tipine göre kategorileri getir
+        try {
+          const categoriesRes = await getCategoriesByFacilityType(facilityType);
+          setCategories(categoriesRes.data);
+          setFilteredCategories(categoriesRes.data);
+        } catch (categoryError) {
+          console.error('Error fetching categories:', categoryError);
+          // Kategori hatası olsa bile devam et
+          setCategories([]);
+          setFilteredCategories([]);
+        }
+        
         setLoading(false);
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -62,21 +68,6 @@ const Home = () => {
   const handleSearch = (e) => {
     setSearchQuery(e.target.value);
   };
-  
-  // Sepet işlevleri devre dışı bırakıldı
-  /*
-  const handleOpenCart = () => {
-    setShowCart(true);
-    // Body scroll'u engelle
-    document.body.style.overflow = 'hidden';
-  };
-  
-  const handleCloseCart = () => {
-    setShowCart(false);
-    // Body scroll'u tekrar etkinleştir
-    document.body.style.overflow = '';
-  };
-  */
 
   if (loading) return <Loader />;
 
@@ -113,13 +104,18 @@ const Home = () => {
                     {restaurant.description}
                   </p>
                 )}
+                
+                <p className="facility-type-badge">
+                  <span className={`badge ${restaurant.facilityType === 'retirement' ? 'bg-info' : 'bg-primary'}`}>
+                    {restaurant.facilityType === 'retirement' ? 'Emekliler Cafesi' : 'Sosyal Tesis'}
+                  </span>
+                </p>
               </div>
             </div>
           )}
           
           <div className="tab-buttons">
             <button className="tab-button active">Ana Menü</button>
-            
           </div>
           
           <SearchBox 
@@ -154,10 +150,6 @@ const Home = () => {
         </div>
       </main>
       <Footer />
-      
-      {/* Sepet butonu ve sepet modülü - devre dışı bırakıldı */}
-      {/* <CartButton onClick={handleOpenCart} /> */}
-      {/* {showCart && <Cart onClose={handleCloseCart} />} */}
     </>
   );
 };

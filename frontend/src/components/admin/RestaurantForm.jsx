@@ -1,13 +1,14 @@
-// frontend/src/components/admin/RestaurantForm.jsx
+// frontend/src/components/admin/RestaurantForm.jsx - Tesis tipi seçimi eklendi
 import React, { useState } from 'react';
 
 const RestaurantForm = ({ restaurant, onSubmit, buttonText = 'Kaydet' }) => {
   const [name, setName] = useState(restaurant?.name || '');
   const [slug, setSlug] = useState(restaurant?.slug || '');
   const [address, setAddress] = useState(restaurant?.address || '');
-  const [phone, setPhone] = useState(restaurant?.phone || '');  // Telefon alanı eklendi
+  const [phone, setPhone] = useState(restaurant?.phone || '');
   const [description, setDescription] = useState(restaurant?.description || '');
   const [isActive, setIsActive] = useState(restaurant?.isActive !== false);
+  const [facilityType, setFacilityType] = useState(restaurant?.facilityType || 'social');
   const [image, setImage] = useState(null);
   const [error, setError] = useState('');
   const [imagePreview, setImagePreview] = useState(restaurant?.imageUrl || '');
@@ -28,9 +29,10 @@ const RestaurantForm = ({ restaurant, onSubmit, buttonText = 'Kaydet' }) => {
     formData.append('name', name);
     formData.append('slug', slug);
     formData.append('address', address);
-    formData.append('phone', phone);  // Telefon alanı eklendi
+    formData.append('phone', phone);
     formData.append('description', description);
     formData.append('isActive', isActive);
+    formData.append('facilityType', facilityType);
     
     if (image) {
       formData.append('image', image);
@@ -78,6 +80,19 @@ const RestaurantForm = ({ restaurant, onSubmit, buttonText = 'Kaydet' }) => {
       </div>
       
       <div className="form-group">
+        <label htmlFor="facilityType" className="form-label">Tesis Türü</label>
+        <select
+          id="facilityType"
+          className="form-control"
+          value={facilityType}
+          onChange={(e) => setFacilityType(e.target.value)}
+        >
+          <option value="social">Sosyal Tesis</option>
+          <option value="retirement">Emekliler Cafesi</option>
+        </select>
+      </div>
+      
+      <div className="form-group">
         <label htmlFor="address" className="form-label">Adres</label>
         <input
           type="text"
@@ -89,7 +104,6 @@ const RestaurantForm = ({ restaurant, onSubmit, buttonText = 'Kaydet' }) => {
         />
       </div>
       
-      {/* Telefon Numarası Alanı Eklendi */}
       <div className="form-group">
         <label htmlFor="phone" className="form-label">Telefon Numarası</label>
         <input
@@ -146,7 +160,7 @@ const RestaurantForm = ({ restaurant, onSubmit, buttonText = 'Kaydet' }) => {
         )}
       </div>
       
-        <button type="submit" className="btn btn-primary">
+      <button type="submit" className="btn btn-primary">
         {buttonText}
       </button>
     </form>

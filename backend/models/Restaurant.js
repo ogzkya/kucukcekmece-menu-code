@@ -1,5 +1,12 @@
-// backend/models/Restaurant.js - Slug alanı eklenmiş model
+// backend/models/Restaurant.js - Tesis tipleri eklendi
 import mongoose from 'mongoose';
+import { FACILITY_TYPES } from './constants.js';
+
+// Tesis türleri için sabit değerler
+export const FACILITY_TYPES = {
+  SOCIAL: 'social',      // Sosyal Tesis
+  RETIREMENT: 'retirement' // Emekliler Cafesi
+};
 
 const restaurantSchema = new mongoose.Schema(
   {
@@ -13,9 +20,19 @@ const restaurantSchema = new mongoose.Schema(
       unique: true,
       lowercase: true
     },
+    facilityType: {
+      type: String,
+      enum: Object.values(FACILITY_TYPES),
+      default: FACILITY_TYPES.SOCIAL,
+      required: true
+    },
     address: {
       type: String,
       required: true,
+    },
+    phone: {
+      type: String,
+      default: '',
     },
     description: {
       type: String,

@@ -1,4 +1,4 @@
-// backend/routes/categoryRoutes.js - Category routes
+// backend/routes/categoryRoutes.js - Tesis tipi rotası eklendi
 import express from 'express';
 import {
   getCategories,
@@ -7,6 +7,7 @@ import {
   updateCategory,
   deleteCategory,
   getAdminCategories,
+  getCategoriesByFacilityType
 } from '../controllers/categoryController.js';
 import { protect, admin } from '../middleware/authMiddleware.js';
 import upload from '../middleware/uploadMiddleware.js';
@@ -18,6 +19,7 @@ router.route('/')
   .post(protect, admin, upload.single('image'), createCategory);
 
 router.get('/admin', protect, admin, getAdminCategories);
+router.get('/facility/:facilityType', getCategoriesByFacilityType);
 
 router.route('/:id')
   .get(getCategoryById)

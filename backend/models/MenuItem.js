@@ -1,5 +1,7 @@
-// backend/models/MenuItem.js - Menu item schema
+// backend/models/MenuItem.js - Tesis tipi eklendi
 import mongoose from 'mongoose';
+import { FACILITY_TYPES } from './Restaurant.js';
+import { FACILITY_TYPES } from './constants.js';
 
 const menuItemSchema = new mongoose.Schema(
   {
@@ -40,6 +42,12 @@ const menuItemSchema = new mongoose.Schema(
       type: Number,
       default: 0,
     },
+    facilityType: {
+      type: String,
+      enum: Object.values(FACILITY_TYPES),
+      default: FACILITY_TYPES.SOCIAL,
+      required: true
+    }
   },
   {
     timestamps: true,

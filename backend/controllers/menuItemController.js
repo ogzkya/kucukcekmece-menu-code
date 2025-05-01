@@ -1,5 +1,8 @@
-// backend/controllers/menuItemController.js - Menu Item management
+// backend/controllers/menuItemController.js - Tesis tipi ile ilgili fonksiyonlar eklendi
 import MenuItem from '../models/MenuItem.js';
+import Category from '../models/Category.js';
+import { FACILITY_TYPES } from '../models/Restaurant.js';
+import { FACILITY_TYPES } from '../models/constants.js';
 
 // @desc    Get all menu items 
 // @route   GET /api/menu-items
@@ -50,6 +53,47 @@ export const getMenuItemsByCategory = async (req, res) => {
   }
 };
 
+// @desc    Get menu items by facility type
+// @route   GET /api/menu-items/facility/:facilityType
+// @access  Public
+export const getMenuItemsByFacilityType = async (req, res) => {
+  try {
+    const { facilityType } = req.params;
+    
+    const menuItems = await MenuItem.find({ 
+      isActive: true,
+      facilityType
+    })
+      .populate('category', 'name')
+      .sort('orderIndex');
+      
+    res.json(menuItems);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server Error' });
+  }
+};
+
+// @desc    Get menu items by category and facility type
+// @route   GET /api/menu-items/category/:categoryId/facility/:facilityType
+// @access  Public
+export const getMenuItemsByCategoryAndFacilityType = async (req, res) => {
+  try {
+    const { categoryId, facilityType } = req.params;
+    
+    const menuItems = await MenuItem.find({ 
+      category: categoryId,
+      isActive: true,
+      facilityType
+    }).sort('orderIndex');
+    
+    res.json(menuItems);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server Error' });
+  }
+};
+
 // @desc    Get menu item by ID
 // @route   GET /api/menu-items/:id
 // @access  Public
@@ -82,7 +126,8 @@ export const createMenuItem = async (req, res) => {
       allergens,
       weight,
       orderIndex,
-      isActive 
+      isActive,
+      facilityType 
     } = req.body;
     
     let imageUrl = '';
@@ -91,6 +136,16 @@ export const createMenuItem = async (req, res) => {
       imageUrl = `/uploads/${req.file.filename}`;
     } else {
       return res.status(400).json({ message: 'Please upload an image' });
+    }
+
+    // İlgili kategoriyi bul
+    let categoryFacilityType = FACILITY_TYPES.SOCIAL; // Varsayılan değer
+    
+    if (category) {
+      const categoryObj = await Category.findById(category);
+      if (categoryObj) {
+        categoryFacilityType = categoryObj.facilityType || FACILITY_TYPES.SOCIAL;
+      }
     }
 
     // Parse allergens if it's a string
@@ -109,6 +164,7 @@ export const createMenuItem = async (req, res) => {
       allergens: allergensArray || [],
       orderIndex: orderIndex || 0,
       isActive: isActive !== undefined ? isActive : true,
+      facilityType: facilityType || categoryFacilityType
     });
 
     const createdMenuItem = await menuItem.save();
@@ -132,12 +188,26 @@ export const updateMenuItem = async (req, res) => {
       allergens,
       weight,
       orderIndex,
-      isActive 
+      isActive,
+      facilityType
     } = req.body;
     
     const menuItem = await MenuItem.findById(req.params.id);
     
     if (menuItem) {
+      // Kategori değiştiyse, yeni kategoriyi kontrol et
+      if (category && category !== menuItem.category.toString()) {
+        const categoryObj = await Category.findById(category);
+        if (!categoryObj) {
+          return res.status(404).json({ message: 'Category not found' });
+        }
+        
+        // Kategori değiştiyse ve facilityType belirtilmediyse, kategorinin facilityType'ını kullan
+        if (!facilityType) {
+          menuItem.facilityType = categoryObj.facilityType;
+        }
+      }
+      
       menuItem.name = name || menuItem.name;
       menuItem.description = description !== undefined ? description : menuItem.description;
       menuItem.price = price !== undefined ? price : menuItem.price;
@@ -145,6 +215,7 @@ export const updateMenuItem = async (req, res) => {
       menuItem.category = category || menuItem.category;
       menuItem.orderIndex = orderIndex !== undefined ? orderIndex : menuItem.orderIndex;
       menuItem.isActive = isActive !== undefined ? isActive : menuItem.isActive;
+      menuItem.facilityType = facilityType || menuItem.facilityType;
       
       // Parse allergens if it's a string
       if (allergens) {

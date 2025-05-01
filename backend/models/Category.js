@@ -1,5 +1,7 @@
-// backend/models/Category.js - Category schema
+// backend/models/Category.js - Tesis tipi eklendi
 import mongoose from 'mongoose';
+import { FACILITY_TYPES } from './Restaurant.js';
+import { FACILITY_TYPES } from './constants.js';
 
 const categorySchema = new mongoose.Schema(
   {
@@ -19,6 +21,12 @@ const categorySchema = new mongoose.Schema(
       type: Boolean,
       default: true,
     },
+    facilityType: {
+      type: String,
+      enum: Object.values(FACILITY_TYPES),
+      default: FACILITY_TYPES.SOCIAL,
+      required: true
+    }
   },
   {
     timestamps: true,

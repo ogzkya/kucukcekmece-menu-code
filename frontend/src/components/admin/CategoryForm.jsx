@@ -1,10 +1,11 @@
-// frontend/src/components/admin/CategoryForm.jsx
+// frontend/src/components/admin/CategoryForm.jsx - Tesis tipi seçimi eklendi
 import React, { useState } from 'react';
 
 const CategoryForm = ({ category, onSubmit, buttonText = 'Kaydet' }) => {
   const [name, setName] = useState(category?.name || '');
   const [orderIndex, setOrderIndex] = useState(category?.orderIndex || 0);
   const [isActive, setIsActive] = useState(category?.isActive !== false);
+  const [facilityType, setFacilityType] = useState(category?.facilityType || 'social');
   const [image, setImage] = useState(null);
   const [error, setError] = useState('');
   const [imagePreview, setImagePreview] = useState(category?.imageUrl || '');
@@ -25,6 +26,7 @@ const CategoryForm = ({ category, onSubmit, buttonText = 'Kaydet' }) => {
     formData.append('name', name);
     formData.append('orderIndex', orderIndex);
     formData.append('isActive', isActive);
+    formData.append('facilityType', facilityType);
     
     if (image) {
       formData.append('image', image);
@@ -56,6 +58,20 @@ const CategoryForm = ({ category, onSubmit, buttonText = 'Kaydet' }) => {
           onChange={(e) => setName(e.target.value)}
           required
         />
+      </div>
+      
+      <div className="form-group">
+        <label htmlFor="facilityType" className="form-label">Tesis Türü</label>
+        <select
+          id="facilityType"
+          className="form-control"
+          value={facilityType}
+          onChange={(e) => setFacilityType(e.target.value)}
+        >
+          <option value="social">Sosyal Tesis</option>
+          <option value="retirement">Emekliler Cafesi</option>
+        </select>
+        <small className="text-muted">Bu kategori hangi tesis tipinde görüntülenecek</small>
       </div>
       
       <div className="form-group">

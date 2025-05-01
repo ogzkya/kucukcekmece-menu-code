@@ -1,4 +1,4 @@
-// backend/routes/restaurantRoutes.js - Restaurant routes
+// backend/routes/restaurantRoutes.js - Tesis tipi rotası eklendi
 import express from 'express';
 import {
   getRestaurants,
@@ -7,7 +7,8 @@ import {
   updateRestaurant,
   deleteRestaurant,
   getAdminRestaurants,
-  getRestaurantBySlug
+  getRestaurantBySlug,
+  getRestaurantsByFacilityType
 } from '../controllers/restaurantController.js';
 import { protect, admin } from '../middleware/authMiddleware.js';
 import upload from '../middleware/uploadMiddleware.js';
@@ -20,6 +21,7 @@ router.route('/')
 
 router.get('/admin', protect, admin, getAdminRestaurants);
 router.get('/slug/:slug', getRestaurantBySlug);
+router.get('/type/:facilityType', getRestaurantsByFacilityType);
 
 router.route('/:id')
   .get(getRestaurantById)

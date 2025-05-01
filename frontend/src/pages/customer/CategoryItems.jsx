@@ -1,40 +1,46 @@
-// frontend/src/pages/customer/CategoryItems.jsx - Sepet entegrasyonu devre dışı bırakılmış kategori sayfası
-
+// frontend/src/pages/customer/CategoryItems.jsx - Tesis türüne göre menü öğelerini getirme
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { getMenuItemsByCategory, getCategoryById } from '../../api';
+import { getMenuItemsByCategoryAndFacilityType, getCategoryById, getRestaurantBySlug } from '../../api';
 import Header from '../../components/common/Header';
 import Footer from '../../components/common/Footer';
 import MenuItemCard from '../../components/customer/MenuItemCard';
 import SearchBox from '../../components/common/SearchBox';
 import Loader from '../../components/common/Loader';
-// import CartButton from '../../components/customer/CartButton';
-// import Cart from '../../components/customer/Cart';
 
 const CategoryItems = () => {
   const { id, slug } = useParams();
   const [menuItems, setMenuItems] = useState([]);
   const [filteredItems, setFilteredItems] = useState([]);
   const [category, setCategory] = useState(null);
+  const [restaurant, setRestaurant] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
-  
-  // Sepet state'i devre dışı bırakıldı
-  // const [showCart, setShowCart] = useState(false);
   
   useEffect(() => {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const [menuItemsResponse, categoryResponse] = await Promise.all([
-          getMenuItemsByCategory(id),
+        
+        // Önce tesisi ve kategoriyi paralel olarak getir
+        const [restaurantRes, categoryRes] = await Promise.all([
+          getRestaurantBySlug(slug),
           getCategoryById(id)
         ]);
         
-        setMenuItems(menuItemsResponse.data);
-        setFilteredItems(menuItemsResponse.data);
-        setCategory(categoryResponse.data);
+        const restaurantData = restaurantRes.data;
+        setRestaurant(restaurantData);
+        setCategory(categoryRes.data);
+        
+        // Sonra tesis türüne ve kategoriye göre menü öğelerini getir
+        const menuItemsRes = await getMenuItemsByCategoryAndFacilityType(
+          id, 
+          restaurantData.facilityType
+        );
+        
+        setMenuItems(menuItemsRes.data);
+        setFilteredItems(menuItemsRes.data);
         setLoading(false);
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -44,7 +50,7 @@ const CategoryItems = () => {
     };
 
     fetchData();
-  }, [id]);
+  }, [id, slug]);
   
   // Arama fonksiyonu
   useEffect(() => {
@@ -63,21 +69,6 @@ const CategoryItems = () => {
   const handleSearch = (e) => {
     setSearchQuery(e.target.value);
   };
-  
-  // Sepet işlevleri devre dışı bırakıldı
-  /*
-  const handleOpenCart = () => {
-    setShowCart(true);
-    // Body scroll'u engelle
-    document.body.style.overflow = 'hidden';
-  };
-  
-  const handleCloseCart = () => {
-    setShowCart(false);
-    // Body scroll'u tekrar etkinleştir
-    document.body.style.overflow = '';
-  };
-  */
 
   if (loading) return <Loader />;
 
@@ -107,8 +98,6 @@ const CategoryItems = () => {
               <div>
                 <div className="tab-buttons">
                   <button className="tab-button active">Ana Menü</button>
-                  {/* ** <button className="tab-button active">yedek</button>**  */}
-                 
                 </div>
                 
                 <SearchBox 
@@ -159,10 +148,6 @@ const CategoryItems = () => {
         </div>
       </main>
       <Footer />
-      
-      {/* Sepet butonu ve sepet modülü - devre dışı bırakıldı */}
-      {/* <CartButton onClick={handleOpenCart} /> */}
-      {/* {showCart && <Cart onClose={handleCloseCart} />} */}
     </>
   );
 };
