@@ -1,19 +1,22 @@
-// Tesis Kartı Bileşeni Güncellemesi
-// frontend/src/components/customer/RestaurantCard.jsx
-
-import React from 'react';
+// frontend/src/components/customer/RestaurantCard.jsx - Optimize edilmiş
+import React, { memo } from 'react';
 import { Link } from 'react-router-dom';
 
-const RestaurantCard = ({ restaurant }) => {
+const RestaurantCard = memo(({ restaurant }) => {
+  // Tesiste görsel olup olmadığını kontrol et
+  const hasImage = Boolean(restaurant.imageUrl);
+  
   return (
     <Link to={`/tesis/${restaurant.slug}`} className="facility-card">
       <div className="facility-image-container">
-        {restaurant.imageUrl ? (
+        {hasImage ? (
           <img 
             src={restaurant.imageUrl} 
             alt={restaurant.name} 
             className="facility-image" 
             loading="lazy"
+            width="400"
+            height="180"
           />
         ) : (
           <div className="facility-image-placeholder">
@@ -41,6 +44,12 @@ const RestaurantCard = ({ restaurant }) => {
           <p className="facility-description">{restaurant.description}</p>
         )}
         
+        <div className="facility-type-badge mt-2">
+          <span className={`badge ${restaurant.facilityType === 'retirement' ? 'bg-info' : 'bg-primary'}`}>
+            {restaurant.facilityType === 'retirement' ? 'Emekliler Cafesi' : 'Sosyal Tesis'}
+          </span>
+        </div>
+        
         <div className="facility-action">
           <span className="facility-button">
             Menüyü Görüntüle
@@ -52,6 +61,9 @@ const RestaurantCard = ({ restaurant }) => {
       </div>
     </Link>
   );
-};
+});
+
+// DisplayName debugging için
+RestaurantCard.displayName = 'RestaurantCard';
 
 export default RestaurantCard;

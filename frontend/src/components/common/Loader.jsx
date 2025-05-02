@@ -1,8 +1,8 @@
-// frontend/src/components/common/Loader.jsx - Modern tasarıma güncellenmiş versiyon
-import React from 'react';
+// frontend/src/components/common/Loader.jsx - Optimize edilmiş
+import React, { memo } from 'react';
 
-const Loader = ({ size = 'md', text = 'Yükleniyor...' }) => {
-  // Boyut değerlerini belirle
+const Loader = memo(({ size = 'md', text = 'Yükleniyor...' }) => {
+  // Boyut değerlerini sabit bir obje olarak tanımla - her render'da yeniden oluşturulmasını engelle
   const sizeValues = {
     sm: { loaderSize: '30px', fontSize: '14px' },
     md: { loaderSize: '48px', fontSize: '16px' },
@@ -30,6 +30,9 @@ const Loader = ({ size = 'md', text = 'Yükleniyor...' }) => {
       </div>
     </div>
   );
-};
+});
+
+// DisplayName debugging için
+Loader.displayName = 'Loader';
 
 export default Loader;
