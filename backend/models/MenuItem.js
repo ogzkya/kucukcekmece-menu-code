@@ -1,6 +1,6 @@
 // backend/models/MenuItem.js - Tesis tipi eklendi
 import mongoose from 'mongoose';
-import { FACILITY_TYPES } from './Restaurant.js';
+
 import { FACILITY_TYPES } from './constants.js';
 
 const menuItemSchema = new mongoose.Schema(

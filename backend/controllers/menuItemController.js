@@ -1,7 +1,6 @@
 // backend/controllers/menuItemController.js - Tesis tipi ile ilgili fonksiyonlar eklendi
 import MenuItem from '../models/MenuItem.js';
 import Category from '../models/Category.js';
-import { FACILITY_TYPES } from '../models/Restaurant.js';
 import { FACILITY_TYPES } from '../models/constants.js';
 
 // @desc    Get all menu items 
