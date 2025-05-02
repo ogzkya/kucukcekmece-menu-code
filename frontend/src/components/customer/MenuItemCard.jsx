@@ -1,20 +1,22 @@
-// frontend/src/components/customer/MenuItemCard.jsx - React.memo ile optimize edilmiş
-import React, { memo } from 'react';
+// frontend/src/components/customer/MenuItemCard.jsx - Sepet işlevselliği devre dışı bırakılmış menü öğesi kartı
+
+import React from 'react';
 import { Link } from 'react-router-dom';
+// import AddToCartButton from './AddToCartButton';
 
-// Metin kısaltma fonksiyonu
-const truncateText = (text, maxLength) => {
-  if (!text || text.length <= maxLength) return text;
-  return text.slice(0, maxLength) + '...';
-};
+const MenuItemCard = ({ menuItem, restaurantSlug }) => {
+  // Metin kısaltma fonksiyonu
+  const truncateText = (text, maxLength) => {
+    if (!text || text.length <= maxLength) return text;
+    return text.slice(0, maxLength) + '...';
+  };
 
-// Fiyat biçimlendirme
-const formatPrice = (price) => {
-  if (typeof price !== 'number') return '';
-  return price.toFixed(2);
-};
+  // Fiyat biçimlendirme
+  const formatPrice = (price) => {
+    if (typeof price !== 'number') return '';
+    return price.toFixed(2);
+  };
 
-const MenuItemCard = memo(({ menuItem, restaurantSlug }) => {
   return (
     <div className="menu-item-card">
       <Link to={`/tesis/${restaurantSlug}/item/${menuItem._id}`} className="menu-item-image-container">
@@ -23,14 +25,15 @@ const MenuItemCard = memo(({ menuItem, restaurantSlug }) => {
           alt={menuItem.name} 
           className="menu-item-image" 
           loading="lazy" 
-          width="300"
-          height="200"
         />
         {menuItem.price > 0 && (
           <div className="menu-item-price-tag">
             {formatPrice(menuItem.price)} ₺
           </div>
         )}
+        
+        {/* Sepete ekle butonu - devre dışı bırakıldı */}
+        {/* <AddToCartButton menuItem={menuItem} /> */}
       </Link>
       
       <div className="menu-item-content">
@@ -74,9 +77,6 @@ const MenuItemCard = memo(({ menuItem, restaurantSlug }) => {
       </div>
     </div>
   );
-});
-
-// displayName ekleyerek debugging kolaylığı sağlıyoruz
-MenuItemCard.displayName = 'MenuItemCard';
+};
 
 export default MenuItemCard;

@@ -1,96 +1,88 @@
-// frontend/src/pages/customer/ItemDetail.jsx - Optimize edilmiş kod
-import React, { useState, useEffect, useCallback } from 'react';
+// frontend/src/pages/customer/ItemDetail.jsx - Sepet entegrasyonu devre dışı bırakılmış ürün detay sayfası
+import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { getMenuItemById } from '../../api';
 import Header from '../../components/common/Header';
 import Footer from '../../components/common/Footer';
 import MenuItemDetail from '../../components/customer/MenuItemDetail';
 import Loader from '../../components/common/Loader';
+// import CartButton from '../../components/customer/CartButton';
+// import Cart from '../../components/customer/Cart';
 
 const ItemDetail = () => {
   const { id, slug } = useParams();
-  const [data, setData] = useState({
-    menuItem: null,
-    loading: true,
-    error: null
-  });
+  const [menuItem, setMenuItem] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   
-  const fetchMenuItem = useCallback(async () => {
-    // Önbellekte veri var mı kontrol et
-    const cacheKey = `menu_item_${id}`;
-    const cachedData = sessionStorage.getItem(cacheKey);
-    
-    if (cachedData) {
-      const parsedData = JSON.parse(cachedData);
-      setData(parsedData);
-      return;
-    }
-    
-    try {
-      setData(prev => ({ ...prev, loading: true }));
-      const { data: responseData } = await getMenuItemById(id);
-      
-      const newData = {
-        menuItem: responseData,
-        loading: false,
-        error: null
-      };
-      
-      // Veriyi önbelleğe kaydet
-      sessionStorage.setItem(cacheKey, JSON.stringify(newData));
-      setData(newData);
-    } catch (error) {
-      console.error('Error fetching menu item:', error);
-      setData({
-        menuItem: null,
-        loading: false,
-        error: 'Ürün detayları yüklenirken bir hata oluştu. Lütfen daha sonra tekrar deneyin.'
-      });
-    }
-  }, [id]);
+  // Sepet state'i devre dışı bırakıldı
+  // const [showCart, setShowCart] = useState(false);
 
   useEffect(() => {
-    fetchMenuItem();
-    
-    // Önbellek temizliği için
-    return () => {
-      // Component unmount olduğunda işlemler
+    const fetchMenuItem = async () => {
+      try {
+        setLoading(true);
+        const { data } = await getMenuItemById(id);
+        setMenuItem(data);
+        setLoading(false);
+      } catch (error) {
+        console.error('Error fetching menu item:', error);
+        setError('Ürün detayları yüklenirken bir hata oluştu. Lütfen daha sonra tekrar deneyin.');
+        setLoading(false);
+      }
     };
-  }, [fetchMenuItem]);
+
+    fetchMenuItem();
+  }, [id]);
   
-  const getBackUrl = useCallback(() => {
-    if (data.menuItem && data.menuItem.category) {
-      return `/tesis/${slug}/category/${data.menuItem.category}`;
+  const getBackUrl = () => {
+    if (menuItem && menuItem.category) {
+      return `/tesis/${slug}/category/${menuItem.category}`;
     }
     return `/tesis/${slug}`;
-  }, [data.menuItem, slug]);
+  };
+  
+  // Sepet işlevleri devre dışı bırakıldı
+  /*
+  const handleOpenCart = () => {
+    setShowCart(true);
+    // Body scroll'u engelle
+    document.body.style.overflow = 'hidden';
+  };
+  
+  const handleCloseCart = () => {
+    setShowCart(false);
+    // Body scroll'u tekrar etkinleştir
+    document.body.style.overflow = '';
+  };
+  */
 
-  if (data.loading) return <Loader />;
+  if (loading) return <Loader />;
 
   return (
     <>
       <Header 
-        title={data.menuItem ? data.menuItem.name : 'Ürün Detayı'} 
+        title={menuItem ? menuItem.name : 'Ürün Detayı'} 
         showBackButton={true}
         backTo={getBackUrl()}
       />
       
       <main className="main-content">
         <div className="container">
-          {data.error && (
+          {error && (
             <div className="alert alert-danger mt-4">
               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="me-2">
                 <circle cx="12" cy="12" r="10"></circle>
                 <line x1="12" y1="8" x2="12" y2="12"></line>
                 <line x1="12" y1="16" x2="12.01" y2="16"></line>
               </svg>
-              {data.error}
+              {error}
             </div>
           )}
           
-          <MenuItemDetail menuItem={data.menuItem} />
+          <MenuItemDetail menuItem={menuItem} />
           
-          {data.menuItem && (
+          {menuItem && (
             <div className="item-detail-actions">
               <button 
                 onClick={() => window.history.back()} 
@@ -107,6 +99,10 @@ const ItemDetail = () => {
         </div>
       </main>
       <Footer />
+      
+      {/* Sepet butonu ve sepet modülü - devre dışı bırakıldı */}
+      {/* <CartButton onClick={handleOpenCart} /> */}
+      {/* {showCart && <Cart onClose={handleCloseCart} />} */}
     </>
   );
 };

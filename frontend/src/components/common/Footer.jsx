@@ -1,21 +1,14 @@
-// frontend/src/components/common/Footer.jsx - Optimize edilmiş
-import React, { memo } from 'react';
+// frontend/src/components/common/Footer.jsx - Footer component
+import React from 'react';
 
-// Footer nadiren render edildiğinden memo gereksiz olabilir,
-// ancak tutarlılık için ekliyoruz
-const Footer = memo(() => {
-  const currentYear = new Date().getFullYear();
-  
+const Footer = () => {
   return (
     <footer className="footer p-3 text-center">
       <div className="container">
-        <p>&copy; {currentYear} Küçükçekmece Belediyesi - Tüm Hakları Saklıdır</p>
+        <p>&copy; {new Date().getFullYear()} Küçükçekmece Belediyesi - Tüm Hakları Saklıdır</p>
       </div>
     </footer>
   );
-});
+};
 
-// DisplayName debugging için
-Footer.displayName = 'Footer';
-
-export default Footer
+export default Footer;

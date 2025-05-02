@@ -165,7 +165,7 @@ const MenuItemForm = ({ menuItem, onSubmit, buttonText = 'Kaydet' }) => {
           onChange={handleFacilityTypeChange}
         >
           <option value="social">Sosyal Tesis</option>
-          <option value="retirement">Emekliler Cafesi</option>
+          <option value="retirement">Emekliler Kafeteryası</option>
         </select>
         <small className="text-muted">Menü öğesinin ait olduğu tesis türü</small>
       </div>

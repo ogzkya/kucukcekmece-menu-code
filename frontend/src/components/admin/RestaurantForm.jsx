@@ -88,7 +88,7 @@ const RestaurantForm = ({ restaurant, onSubmit, buttonText = 'Kaydet' }) => {
           onChange={(e) => setFacilityType(e.target.value)}
         >
           <option value="social">Sosyal Tesis</option>
-          <option value="retirement">Emekliler Cafesi</option>
+          <option value="retirement">Emekliler Kafeteryası</option>
         </select>
       </div>
       

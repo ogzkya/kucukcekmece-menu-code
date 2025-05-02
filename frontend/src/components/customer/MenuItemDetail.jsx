@@ -1,23 +1,9 @@
-// frontend/src/components/customer/MenuItemDetail.jsx - Optimize edilmiş
-import React, { memo } from 'react';
+// frontend/src/components/customer/MenuItemDetail.jsx - Sepet işlevselliği devre dışı bırakılmış menü öğesi detay sayfası
+import React from 'react';
+// import AddToCartButton from './AddToCartButton';
 
-const MenuItemDetail = memo(({ menuItem }) => {
+const MenuItemDetail = ({ menuItem }) => {
   if (!menuItem) return null;
-
-  // Alerjen listesini oluştur - useMemo içine almaya gerek yok
-  // çünkü bileşen zaten memo kullanıyor ve allergens değiştiğinde re-render olmalı
-  const allergenList = menuItem.allergens && menuItem.allergens.length > 0 ? (
-    <div className="menu-item-detail-allergens">
-      <h4 className="menu-item-detail-section-title">Alerjenler</h4>
-      <div className="menu-item-detail-allergens-list">
-        {menuItem.allergens.map((allergen, index) => (
-          <span key={index} className="menu-item-detail-allergen">
-            {allergen}
-          </span>
-        ))}
-      </div>
-    </div>
-  ) : null;
 
   return (
     <div className="menu-item-detail fade-in">
@@ -26,9 +12,6 @@ const MenuItemDetail = memo(({ menuItem }) => {
           src={menuItem.imageUrl} 
           alt={menuItem.name} 
           className="menu-item-detail-image" 
-          loading="lazy"
-          width="800"
-          height="400"
         />
       </div>
       
@@ -54,7 +37,21 @@ const MenuItemDetail = memo(({ menuItem }) => {
           </div>
         </div>
         
-        {allergenList}
+        {/* Sipariş ekleme bölümü - devre dışı bırakıldı */}
+        {/* <AddToCartButton menuItem={menuItem} isDetail={true} /> */}
+        
+        {menuItem.allergens && menuItem.allergens.length > 0 && (
+          <div className="menu-item-detail-allergens">
+            <h4 className="menu-item-detail-section-title">Alerjenler</h4>
+            <div className="menu-item-detail-allergens-list">
+              {menuItem.allergens.map((allergen, index) => (
+                <span key={index} className="menu-item-detail-allergen">
+                  {allergen}
+                </span>
+              ))}
+            </div>
+          </div>
+        )}
         
         <div className="menu-item-detail-footer">
           <div className="menu-item-detail-disclaimer">
@@ -73,9 +70,6 @@ const MenuItemDetail = memo(({ menuItem }) => {
       </div>
     </div>
   );
-});
-
-// DisplayName debugging için
-MenuItemDetail.displayName = 'MenuItemDetail';
+};
 
 export default MenuItemDetail;
