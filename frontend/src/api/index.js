@@ -1,4 +1,30 @@
-// frontend/src/api/index.js - Yeni API endpointleri
+// frontend/src/api/index.js
+import axios from 'axios';
+
+// API istemcisini oluştur
+const api = axios.create({
+  baseURL: '/api',
+  headers: {
+    'Content-Type': 'application/json',
+  }
+});
+
+// Token eklemek için interceptor
+api.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      config.headers['Authorization'] = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => Promise.reject(error)
+);
+
+// Authentication API
+export const login = (userData) => api.post('/auth/login', userData);
+export const getUserProfile = () => api.get('/auth/profile');
+
 // Categories API
 export const getCategories = () => api.get('/categories');
 export const getCategoryById = (id) => api.get(`/categories/${id}`);
@@ -56,3 +82,10 @@ export const updateRestaurant = (id, formData) => {
 };
 export const deleteRestaurant = (id) => api.delete(`/restaurants/${id}`);
 export const getAdminRestaurants = () => api.get('/restaurants/admin');
+
+// User API
+export const getAdminUsers = () => api.get('/users/admins');
+export const createAdminUser = (userData) => api.post('/users/admin', userData);
+export const getUserById = (id) => api.get(`/users/${id}`);
+export const updateUser = (id, userData) => api.put(`/users/${id}`, userData);
+export const deleteUser = (id) => api.delete(`/users/${id}`);

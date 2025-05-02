@@ -2,11 +2,6 @@
 import mongoose from 'mongoose';
 import { FACILITY_TYPES } from './constants.js';
 
-// Tesis türleri için sabit değerler
-export const FACILITY_TYPES = {
-  SOCIAL: 'social',      // Sosyal Tesis
-  RETIREMENT: 'retirement' // Emekliler Cafesi
-};
 
 const restaurantSchema = new mongoose.Schema(
   {
