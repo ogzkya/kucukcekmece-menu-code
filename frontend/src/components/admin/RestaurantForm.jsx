@@ -1,5 +1,6 @@
-// frontend/src/components/admin/RestaurantForm.jsx - Tesis tipi seçimi eklendi
+// frontend/src/components/admin/RestaurantForm.jsx - Form verisi dönüşümleri düzeltildi
 import React, { useState } from 'react';
+import { logFormData } from '../../api/apiWrapper';
 
 const RestaurantForm = ({ restaurant, onSubmit, buttonText = 'Kaydet' }) => {
   const [name, setName] = useState(restaurant?.name || '');
@@ -31,12 +32,15 @@ const RestaurantForm = ({ restaurant, onSubmit, buttonText = 'Kaydet' }) => {
     formData.append('address', address);
     formData.append('phone', phone);
     formData.append('description', description);
-    formData.append('isActive', isActive);
+    formData.append('isActive', isActive.toString());
     formData.append('facilityType', facilityType);
     
     if (image) {
       formData.append('image', image);
     }
+
+    // Debug için form verilerini logla
+    logFormData(formData);
 
     onSubmit(formData);
   };
@@ -45,9 +49,46 @@ const RestaurantForm = ({ restaurant, onSubmit, buttonText = 'Kaydet' }) => {
     const file = e.target.files[0];
     
     if (file) {
+      // Dosya türünü kontrol et
+      const validImageTypes = ['image/jpeg', 'image/png', 'image/webp'];
+      if (!validImageTypes.includes(file.type)) {
+        setError('Lütfen geçerli bir görsel formatı seçin (JPEG, PNG, WEBP)');
+        return;
+      }
+      
       setImage(file);
       setImagePreview(URL.createObjectURL(file));
+      setError(''); // Hata varsa temizle
     }
+  };
+
+  // Slug oluşturucu - Türkçe karakterleri değiştirir ve boşlukları tire ile değiştirir
+  const generateSlug = () => {
+    if (!name) return;
+    
+    // Türkçe karakterleri değiştir
+    let slugText = name.toLowerCase()
+      .replace(/ğ/g, 'g')
+      .replace(/ü/g, 'u')
+      .replace(/ş/g, 's')
+      .replace(/ı/g, 'i')
+      .replace(/ö/g, 'o')
+      .replace(/ç/g, 'c')
+      .replace(/Ğ/g, 'G')
+      .replace(/Ü/g, 'U')
+      .replace(/Ş/g, 'S')
+      .replace(/İ/g, 'I')
+      .replace(/Ö/g, 'O')
+      .replace(/Ç/g, 'C');
+    
+    // Boşlukları ve özel karakterleri tire ile değiştir
+    slugText = slugText.replace(/\s+/g, '-')           // Boşlukları tire ile değiştir
+              .replace(/[^\w\-]+/g, '')        // Alfanümerik olmayan karakterleri kaldır
+              .replace(/\-\-+/g, '-')          // Birden fazla tireyi tek tire yap
+              .replace(/^-+/, '')              // Baştaki tireleri kaldır
+              .replace(/-+$/, '');             // Sondaki tireleri kaldır
+    
+    setSlug(slugText);
   };
 
   return (
@@ -62,20 +103,30 @@ const RestaurantForm = ({ restaurant, onSubmit, buttonText = 'Kaydet' }) => {
           className="form-control"
           value={name}
           onChange={(e) => setName(e.target.value)}
+          onBlur={generateSlug}
           required
         />
       </div>
       
       <div className="form-group">
         <label htmlFor="slug" className="form-label">Slug (URL Yolu)</label>
-        <input
-          type="text"
-          id="slug"
-          className="form-control"
-          value={slug}
-          onChange={(e) => setSlug(e.target.value)}
-          placeholder="Otomatik oluşturulacak, boş bırakabilirsiniz"
-        />
+        <div className="input-group">
+          <input
+            type="text"
+            id="slug"
+            className="form-control"
+            value={slug}
+            onChange={(e) => setSlug(e.target.value)}
+            placeholder="Otomatik oluşturulacak, boş bırakabilirsiniz"
+          />
+          <button 
+            type="button" 
+            className="btn btn-outline"
+            onClick={generateSlug}
+          >
+            Oluştur
+          </button>
+        </div>
         <small className="text-muted">Boş bırakılırsa otomatik oluşturulur. Örn: "belediye-yani", "halkali"</small>
       </div>
       
@@ -147,7 +198,7 @@ const RestaurantForm = ({ restaurant, onSubmit, buttonText = 'Kaydet' }) => {
           id="image"
           className="form-control"
           onChange={handleImageChange}
-          accept="image/*"
+          accept="image/jpeg,image/png,image/webp"
         />
         {imagePreview && (
           <div className="mt-2">

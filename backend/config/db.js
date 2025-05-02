@@ -1,15 +1,13 @@
-// backend/config/db.js - Database connection
+// backend/config/db.js - Güncellenmiş MongoDB bağlantısı
 import mongoose from 'mongoose';
 import colors from 'colors';
 
 const connectDB = async () => {
   try {
-    const mongoUri = process.env.MONGODB_URI || 'mongodb://localhost:27017/qrmenu';
+    const mongoUri = process.env.MONGODB_URI || 'mongodb://localhost:27017/kucukcekmece-menu';
     
-    // Bağlantı ayarları - node depricated warning hatalarını engellemek için
+    // Mongoose 6+ için yeni bağlantı ayarları
     const options = {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
       serverSelectionTimeoutMS: 5000 // Zaman aşımı ayarı
     };
     

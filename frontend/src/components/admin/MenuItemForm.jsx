@@ -1,6 +1,7 @@
-// frontend/src/components/admin/MenuItemForm.jsx - Tesis tipi seçimi ve kategori filtreleme eklendi
+// frontend/src/components/admin/MenuItemForm.jsx - Form verisi dönüşümleri düzeltildi
 import React, { useState, useEffect } from 'react';
 import { getAdminCategories } from '../../api';
+import { logFormData } from '../../api/apiWrapper';
 
 const MenuItemForm = ({ menuItem, onSubmit, buttonText = 'Kaydet' }) => {
   const [name, setName] = useState(menuItem?.name || '');
@@ -81,17 +82,20 @@ const MenuItemForm = ({ menuItem, onSubmit, buttonText = 'Kaydet' }) => {
     const formData = new FormData();
     formData.append('name', name);
     formData.append('description', description);
-    formData.append('price', price);
+    formData.append('price', price.toString());
     formData.append('weight', weight);
     formData.append('category', category);
     formData.append('allergens', allergens);
-    formData.append('orderIndex', orderIndex);
-    formData.append('isActive', isActive);
+    formData.append('orderIndex', orderIndex.toString());
+    formData.append('isActive', isActive.toString());
     formData.append('facilityType', facilityType);
     
     if (image) {
       formData.append('image', image);
     }
+
+    // Debug için form verilerini logla
+    logFormData(formData);
 
     onSubmit(formData);
   };
@@ -100,8 +104,16 @@ const MenuItemForm = ({ menuItem, onSubmit, buttonText = 'Kaydet' }) => {
     const file = e.target.files[0];
     
     if (file) {
+      // Dosya türünü kontrol et
+      const validImageTypes = ['image/jpeg', 'image/png', 'image/webp'];
+      if (!validImageTypes.includes(file.type)) {
+        setError('Lütfen geçerli bir görsel formatı seçin (JPEG, PNG, WEBP)');
+        return;
+      }
+      
       setImage(file);
       setImagePreview(URL.createObjectURL(file));
+      setError(''); // Hata varsa temizle
     }
   };
 
@@ -139,7 +151,7 @@ const MenuItemForm = ({ menuItem, onSubmit, buttonText = 'Kaydet' }) => {
           id="price"
           className="form-control"
           value={price}
-          onChange={(e) => setPrice(parseFloat(e.target.value))}
+          onChange={(e) => setPrice(parseFloat(e.target.value) || 0)}
           step="0.01"
           min="0"
         />
@@ -213,7 +225,7 @@ const MenuItemForm = ({ menuItem, onSubmit, buttonText = 'Kaydet' }) => {
           id="orderIndex"
           className="form-control"
           value={orderIndex}
-          onChange={(e) => setOrderIndex(parseInt(e.target.value))}
+          onChange={(e) => setOrderIndex(parseInt(e.target.value) || 0)}
         />
         <small className="text-muted">Menü öğelerinin sıralanma önceliği (Küçük değer daha üstte gösterilir)</small>
       </div>
@@ -238,7 +250,7 @@ const MenuItemForm = ({ menuItem, onSubmit, buttonText = 'Kaydet' }) => {
           id="image"
           className="form-control"
           onChange={handleImageChange}
-          accept="image/*"
+          accept="image/jpeg,image/png,image/webp"
         />
         {imagePreview && (
           <div className="mt-2">
